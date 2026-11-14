@@ -1,0 +1,3391 @@
+[
+ {
+  "name": "C memory 1 step",
+  "seed": 3,
+  "success": 0.8166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "cracked": 6
+   },
+   "stone": {
+    "success": 25,
+    "dropped": 3,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 215.87755102040816
+ },
+ {
+  "name": "C memory 1 step",
+  "seed": 4,
+  "success": 0.7666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 25,
+    "cracked": 5
+   },
+   "stone": {
+    "success": 21,
+    "timeout": 2,
+    "dropped": 7
+   }
+  },
+  "mean_steps_success": 216.1086956521739
+ },
+ {
+  "name": "C memory 1 step",
+  "seed": 2,
+  "success": 0.8333333333333334,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "dropped": 2,
+    "cracked": 4
+   },
+   "stone": {
+    "success": 26,
+    "timeout": 3,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 218.94
+ },
+ {
+  "name": "C memory 1 step",
+  "seed": 0,
+  "success": 0.9666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 30
+   }
+  },
+  "mean_steps_success": 219.1206896551724
+ },
+ {
+  "name": "C memory 1 step",
+  "seed": 1,
+  "success": 0.95,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 29,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 215.50877192982455
+ },
+ {
+  "name": "C base",
+  "seed": 1,
+  "success": 0.9666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 29,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 216.8793103448276,
+  "gen": {
+   "raw_fragile": {
+    "success": 21,
+    "cracked": 9
+   },
+   "medium": {
+    "dropped": 21,
+    "timeout": 2,
+    "success": 4,
+    "cracked": 3
+   },
+   "stone_light": {
+    "success": 27,
+    "dropped": 3
+   },
+   "stone_heavy": {
+    "dropped": 26,
+    "timeout": 4
+   }
+  }
+ },
+ {
+  "name": "C base",
+  "seed": 4,
+  "success": 0.9,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 26,
+    "cracked": 3,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 28,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 217.16666666666666,
+  "gen": {
+   "raw_fragile": {
+    "success": 18,
+    "cracked": 12
+   },
+   "medium": {
+    "dropped": 14,
+    "cracked": 12,
+    "success": 2,
+    "timeout": 2
+   },
+   "stone_light": {
+    "dropped": 5,
+    "success": 24,
+    "timeout": 1
+   },
+   "stone_heavy": {
+    "timeout": 13,
+    "dropped": 17
+   }
+  }
+ },
+ {
+  "name": "C base",
+  "seed": 3,
+  "success": 0.95,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 28,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 217.73684210526315,
+  "gen": {
+   "raw_fragile": {
+    "success": 24,
+    "cracked": 6
+   },
+   "medium": {
+    "dropped": 16,
+    "cracked": 11,
+    "timeout": 3
+   },
+   "stone_light": {
+    "success": 30
+   },
+   "stone_heavy": {
+    "dropped": 16,
+    "timeout": 14
+   }
+  }
+ },
+ {
+  "name": "C base",
+  "seed": 2,
+  "success": 0.9,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 26,
+    "timeout": 1,
+    "dropped": 3
+   }
+  },
+  "mean_steps_success": 220.0185185185185,
+  "gen": {
+   "raw_fragile": {
+    "success": 25,
+    "cracked": 5
+   },
+   "medium": {
+    "cracked": 7,
+    "dropped": 19,
+    "timeout": 2,
+    "success": 2
+   },
+   "stone_light": {
+    "success": 30
+   },
+   "stone_heavy": {
+    "dropped": 19,
+    "timeout": 11
+   }
+  }
+ },
+ {
+  "name": "C base",
+  "seed": 0,
+  "success": 0.9166666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 28,
+    "timeout": 1,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 218.27272727272728,
+  "gen": {
+   "raw_fragile": {
+    "cracked": 9,
+    "success": 21
+   },
+   "medium": {
+    "dropped": 25,
+    "timeout": 4,
+    "cracked": 1
+   },
+   "stone_light": {
+    "success": 22,
+    "dropped": 7,
+    "timeout": 1
+   },
+   "stone_heavy": {
+    "dropped": 14,
+    "timeout": 16
+   }
+  }
+ },
+ {
+  "name": "C memory 6 steps",
+  "seed": 0,
+  "success": 0.8333333333333334,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "cracked": 5,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 26,
+    "dropped": 3,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 221.46
+ },
+ {
+  "name": "C memory 6 steps",
+  "seed": 1,
+  "success": 0.8666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 25,
+    "cracked": 5
+   },
+   "stone": {
+    "success": 27,
+    "timeout": 2,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 219.65384615384616
+ },
+ {
+  "name": "C memory 6 steps",
+  "seed": 2,
+  "success": 0.9333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 27,
+    "timeout": 1,
+    "dropped": 2
+   }
+  },
+  "mean_steps_success": 222.05357142857142
+ },
+ {
+  "name": "C memory 6 steps",
+  "seed": 3,
+  "success": 0.9,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 27,
+    "timeout": 1,
+    "dropped": 2
+   }
+  },
+  "mean_steps_success": 222.5185185185185
+ },
+ {
+  "name": "C memory 6 steps",
+  "seed": 4,
+  "success": 0.85,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 7,
+    "success": 23
+   },
+   "stone": {
+    "success": 28,
+    "timeout": 1,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 219.3921568627451
+ },
+ {
+  "name": "C no action chunks",
+  "seed": 1,
+  "success": 0.016666666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "timeout": 26,
+    "cracked": 1,
+    "success": 1,
+    "dropped": 2
+   },
+   "stone": {
+    "timeout": 30
+   }
+  },
+  "mean_steps_success": 291.0
+ },
+ {
+  "name": "C no action chunks",
+  "seed": 3,
+  "success": 0.0,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "timeout": 30
+   },
+   "stone": {
+    "timeout": 30
+   }
+  },
+  "mean_steps_success": null
+ },
+ {
+  "name": "C no action chunks",
+  "seed": 2,
+  "success": 0.0,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "timeout": 28,
+    "cracked": 1,
+    "dropped": 1
+   },
+   "stone": {
+    "timeout": 30
+   }
+  },
+  "mean_steps_success": null
+ },
+ {
+  "name": "C no action chunks",
+  "seed": 0,
+  "success": 0.0,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "timeout": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "timeout": 30
+   }
+  },
+  "mean_steps_success": null
+ },
+ {
+  "name": "C no action chunks",
+  "seed": 4,
+  "success": 0.0,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "timeout": 30
+   },
+   "stone": {
+    "timeout": 30
+   }
+  },
+  "mean_steps_success": null
+ },
+ {
+  "name": "C chunks of 16",
+  "seed": 3,
+  "success": 0.95,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 28,
+    "dropped": 2
+   }
+  },
+  "mean_steps_success": 217.5438596491228
+ },
+ {
+  "name": "C chunks of 16",
+  "seed": 1,
+  "success": 0.9,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 27,
+    "dropped": 3
+   }
+  },
+  "mean_steps_success": 216.46296296296296
+ },
+ {
+  "name": "C chunks of 16",
+  "seed": 0,
+  "success": 0.95,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 29,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 217.96491228070175
+ },
+ {
+  "name": "C chunks of 16",
+  "seed": 2,
+  "success": 0.8833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 2,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 26,
+    "timeout": 2,
+    "dropped": 2
+   }
+  },
+  "mean_steps_success": 216.64150943396226
+ },
+ {
+  "name": "C chunks of 16",
+  "seed": 4,
+  "success": 0.7833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "cracked": 6
+   },
+   "stone": {
+    "success": 23,
+    "dropped": 3,
+    "timeout": 4
+   }
+  },
+  "mean_steps_success": 216.2340425531915
+ },
+ {
+  "name": "C 50 human demos",
+  "seed": 2,
+  "success": 0.5666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 12,
+    "cracked": 11,
+    "dropped": 6,
+    "timeout": 1
+   },
+   "stone": {
+    "success": 22,
+    "timeout": 2,
+    "dropped": 6
+   }
+  },
+  "mean_steps_success": 211.73529411764707
+ },
+ {
+  "name": "C 50 human demos",
+  "seed": 0,
+  "success": 0.8166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "timeout": 1,
+    "cracked": 5
+   },
+   "stone": {
+    "dropped": 5,
+    "success": 25
+   }
+  },
+  "mean_steps_success": 212.44897959183675
+ },
+ {
+  "name": "C 50 human demos",
+  "seed": 1,
+  "success": 0.9166666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 26,
+    "timeout": 2,
+    "dropped": 2
+   }
+  },
+  "mean_steps_success": 216.38181818181818
+ },
+ {
+  "name": "C 50 human demos",
+  "seed": 3,
+  "success": 0.8666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 24,
+    "dropped": 5,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 212.73076923076923
+ },
+ {
+  "name": "C 50 human demos",
+  "seed": 4,
+  "success": 0.6833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 11,
+    "success": 17,
+    "dropped": 2
+   },
+   "stone": {
+    "success": 24,
+    "dropped": 5,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 214.02439024390245
+ },
+ {
+  "name": "C 300 human demos",
+  "seed": 0,
+  "success": 0.9166666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 27,
+    "dropped": 2,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 219.1818181818182
+ },
+ {
+  "name": "C 300 human demos",
+  "seed": 1,
+  "success": 0.9666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "dropped": 1,
+    "success": 28,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 218.39655172413794
+ },
+ {
+  "name": "C 300 human demos",
+  "seed": 2,
+  "success": 0.9333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "timeout": 3,
+    "success": 26,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 217.96428571428572
+ },
+ {
+  "name": "C 300 human demos",
+  "seed": 3,
+  "success": 0.9166666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "success": 25,
+    "dropped": 1,
+    "timeout": 4
+   }
+  },
+  "mean_steps_success": 217.96363636363637
+ },
+ {
+  "name": "C 300 human demos",
+  "seed": 4,
+  "success": 0.8833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 24,
+    "dropped": 4,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 217.24528301886792
+ },
+ {
+  "name": "C + phase labels",
+  "seed": 1,
+  "success": 0.7,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 18,
+    "cracked": 12
+   },
+   "stone": {
+    "dropped": 4,
+    "success": 24,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 217.07142857142858
+ },
+ {
+  "name": "C + phase labels",
+  "seed": 0,
+  "success": 0.8,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "cracked": 6
+   },
+   "stone": {
+    "timeout": 2,
+    "dropped": 4,
+    "success": 24
+   }
+  },
+  "mean_steps_success": 218.35416666666666
+ },
+ {
+  "name": "C + phase labels",
+  "seed": 2,
+  "success": 0.7333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "cracked": 6
+   },
+   "stone": {
+    "success": 20,
+    "dropped": 4,
+    "timeout": 6
+   }
+  },
+  "mean_steps_success": 217.75
+ },
+ {
+  "name": "C + phase labels",
+  "seed": 3,
+  "success": 0.7833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 25,
+    "cracked": 5
+   },
+   "stone": {
+    "success": 22,
+    "dropped": 5,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 217.4468085106383
+ },
+ {
+  "name": "C + phase labels",
+  "seed": 4,
+  "success": 0.7666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 23,
+    "cracked": 6,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 23,
+    "timeout": 4,
+    "dropped": 3
+   }
+  },
+  "mean_steps_success": 217.30434782608697
+ },
+ {
+  "name": "C + object labels",
+  "seed": 1,
+  "success": 0.6833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 17,
+    "cracked": 12,
+    "dropped": 1
+   },
+   "stone": {
+    "dropped": 5,
+    "success": 24,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 215.9268292682927
+ },
+ {
+  "name": "C + object labels",
+  "seed": 0,
+  "success": 0.8833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "cracked": 5,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 29,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 218.66037735849056
+ },
+ {
+  "name": "C + object labels",
+  "seed": 2,
+  "success": 0.8833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 26,
+    "cracked": 4
+   },
+   "stone": {
+    "dropped": 3,
+    "success": 27
+   }
+  },
+  "mean_steps_success": 220.0
+ },
+ {
+  "name": "C + object labels",
+  "seed": 3,
+  "success": 0.8833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 26,
+    "cracked": 4
+   },
+   "stone": {
+    "success": 27,
+    "dropped": 3
+   }
+  },
+  "mean_steps_success": 218.16981132075472
+ },
+ {
+  "name": "C + object labels",
+  "seed": 4,
+  "success": 0.7833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "cracked": 5,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 23,
+    "timeout": 3,
+    "dropped": 4
+   }
+  },
+  "mean_steps_success": 218.31914893617022
+ },
+ {
+  "name": "C + slip labels",
+  "seed": 0,
+  "success": 0.9,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 26,
+    "timeout": 3,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 217.62962962962962
+ },
+ {
+  "name": "C + slip labels",
+  "seed": 1,
+  "success": 0.9,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 27,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 216.40740740740742
+ },
+ {
+  "name": "C + slip labels",
+  "seed": 4,
+  "success": 0.9166666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 2,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 28,
+    "timeout": 1,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 217.1090909090909
+ },
+ {
+  "name": "C + slip labels",
+  "seed": 2,
+  "success": 0.9833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "success": 29,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 218.72881355932202
+ },
+ {
+  "name": "C + slip labels",
+  "seed": 3,
+  "success": 0.9166666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 26,
+    "dropped": 2,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 217.70909090909092
+ },
+ {
+  "name": "C + all three labels",
+  "seed": 1,
+  "success": 0.7833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 23,
+    "cracked": 7
+   },
+   "stone": {
+    "success": 24,
+    "dropped": 3,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 214.61702127659575
+ },
+ {
+  "name": "C + all three labels",
+  "seed": 0,
+  "success": 0.7166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 21,
+    "cracked": 9
+   },
+   "stone": {
+    "success": 22,
+    "dropped": 4,
+    "timeout": 4
+   }
+  },
+  "mean_steps_success": 217.97674418604652
+ },
+ {
+  "name": "C + all three labels",
+  "seed": 3,
+  "success": 0.6666666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 15,
+    "cracked": 14,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 25,
+    "dropped": 3,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 216.875
+ },
+ {
+  "name": "C + all three labels",
+  "seed": 2,
+  "success": 0.8166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 23,
+    "cracked": 7
+   },
+   "stone": {
+    "success": 26,
+    "timeout": 1,
+    "dropped": 3
+   }
+  },
+  "mean_steps_success": 219.9795918367347
+ },
+ {
+  "name": "C + all three labels",
+  "seed": 4,
+  "success": 0.6833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 10,
+    "dropped": 3,
+    "success": 17
+   },
+   "stone": {
+    "success": 24,
+    "dropped": 4,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 215.41463414634146
+ },
+ {
+  "name": "C + failed demos, labelled",
+  "seed": 2,
+  "success": 0.85,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "dropped": 1,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 23,
+    "dropped": 7
+   }
+  },
+  "mean_steps_success": 216.4313725490196
+ },
+ {
+  "name": "C + failed demos, labelled",
+  "seed": 1,
+  "success": 0.95,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "success": 27,
+    "dropped": 3
+   }
+  },
+  "mean_steps_success": 219.52631578947367
+ },
+ {
+  "name": "C + failed demos, labelled",
+  "seed": 0,
+  "success": 0.9333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 27,
+    "dropped": 3
+   }
+  },
+  "mean_steps_success": 218.51785714285714
+ },
+ {
+  "name": "C + failed demos, labelled",
+  "seed": 3,
+  "success": 0.8166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 26,
+    "cracked": 4
+   },
+   "stone": {
+    "success": 23,
+    "dropped": 5,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 217.46938775510205
+ },
+ {
+  "name": "C + failed demos, labelled",
+  "seed": 4,
+  "success": 0.8833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 3,
+    "success": 27
+   },
+   "stone": {
+    "success": 26,
+    "dropped": 3,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 217.58490566037736
+ },
+ {
+  "name": "C + failed demos, unlabelled",
+  "seed": 2,
+  "success": 0.75,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 26,
+    "cracked": 3,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 19,
+    "dropped": 9,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 215.46666666666667
+ },
+ {
+  "name": "C + failed demos, unlabelled",
+  "seed": 0,
+  "success": 0.9166666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "dropped": 2,
+    "timeout": 1
+   },
+   "stone": {
+    "success": 28,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 218.56363636363636
+ },
+ {
+  "name": "C + failed demos, unlabelled",
+  "seed": 4,
+  "success": 0.7,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 6,
+    "success": 20,
+    "dropped": 4
+   },
+   "stone": {
+    "success": 22,
+    "dropped": 7,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 217.33333333333334
+ },
+ {
+  "name": "C + failed demos, unlabelled",
+  "seed": 1,
+  "success": 0.8333333333333334,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 25,
+    "cracked": 3,
+    "dropped": 2
+   },
+   "stone": {
+    "success": 25,
+    "dropped": 4,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 219.0
+ },
+ {
+  "name": "C + failed demos, unlabelled",
+  "seed": 3,
+  "success": 0.8833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 26,
+    "cracked": 3,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 27,
+    "dropped": 3
+   }
+  },
+  "mean_steps_success": 217.0188679245283
+ },
+ {
+  "name": "C touch lags video 100 ms",
+  "seed": 3,
+  "success": 0.8833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "timeout": 1,
+    "cracked": 1,
+    "dropped": 1
+   },
+   "stone": {
+    "dropped": 4,
+    "success": 26
+   }
+  },
+  "mean_steps_success": 212.9056603773585
+ },
+ {
+  "name": "C touch lags video 100 ms",
+  "seed": 1,
+  "success": 0.8166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 26,
+    "cracked": 4
+   },
+   "stone": {
+    "timeout": 3,
+    "success": 23,
+    "dropped": 4
+   }
+  },
+  "mean_steps_success": 214.6326530612245
+ },
+ {
+  "name": "C touch lags video 100 ms",
+  "seed": 0,
+  "success": 0.8,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 21,
+    "dropped": 6,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 215.60416666666666
+ },
+ {
+  "name": "C touch lags video 100 ms",
+  "seed": 2,
+  "success": 0.8333333333333334,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 23,
+    "timeout": 6,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 215.28
+ },
+ {
+  "name": "C touch lags video 100 ms",
+  "seed": 4,
+  "success": 0.7833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "cracked": 6
+   },
+   "stone": {
+    "success": 23,
+    "timeout": 3,
+    "dropped": 4
+   }
+  },
+  "mean_steps_success": 214.04255319148936
+ },
+ {
+  "name": "C touch lags video 300 ms",
+  "seed": 0,
+  "success": 0.75,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 18,
+    "dropped": 6,
+    "timeout": 6
+   }
+  },
+  "mean_steps_success": 214.2
+ },
+ {
+  "name": "C touch lags video 300 ms",
+  "seed": 1,
+  "success": 0.7166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 15,
+    "dropped": 3,
+    "timeout": 12
+   }
+  },
+  "mean_steps_success": 214.11627906976744
+ },
+ {
+  "name": "C touch lags video 300 ms",
+  "seed": 2,
+  "success": 0.85,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 22,
+    "timeout": 7,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 221.4313725490196
+ },
+ {
+  "name": "C touch lags video 300 ms",
+  "seed": 4,
+  "success": 0.75,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "cracked": 6
+   },
+   "stone": {
+    "success": 21,
+    "dropped": 6,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 213.51111111111112
+ },
+ {
+  "name": "C touch lags video 300 ms",
+  "seed": 3,
+  "success": 0.85,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 1,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 23,
+    "dropped": 3,
+    "timeout": 4
+   }
+  },
+  "mean_steps_success": 215.3921568627451
+ },
+ {
+  "name": "C glove off by up to 30%",
+  "seed": 0,
+  "success": 0.9,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "success": 24,
+    "dropped": 4,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 217.5185185185185
+ },
+ {
+  "name": "C glove off by up to 30%",
+  "seed": 2,
+  "success": 0.9,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 26,
+    "dropped": 3,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 217.5
+ },
+ {
+  "name": "C glove off by up to 30%",
+  "seed": 1,
+  "success": 0.9166666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 27,
+    "timeout": 2,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 216.25454545454545
+ },
+ {
+  "name": "C glove off by up to 30%",
+  "seed": 3,
+  "success": 0.95,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "success": 27,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 218.3684210526316
+ },
+ {
+  "name": "C glove off by up to 30%",
+  "seed": 4,
+  "success": 0.8666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 26,
+    "cracked": 4
+   },
+   "stone": {
+    "success": 26,
+    "dropped": 3,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 217.80769230769232
+ },
+ {
+  "name": "C best 150 of 300 demos",
+  "seed": 1,
+  "success": 0.7166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "dropped": 12,
+    "success": 13,
+    "timeout": 5
+   }
+  },
+  "mean_steps_success": 219.27906976744185
+ },
+ {
+  "name": "C best 150 of 300 demos",
+  "seed": 2,
+  "success": 0.85,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 22,
+    "dropped": 7,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 218.05882352941177
+ },
+ {
+  "name": "C best 150 of 300 demos",
+  "seed": 0,
+  "success": 0.9166666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 26,
+    "dropped": 3,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 218.12727272727273
+ },
+ {
+  "name": "C best 150 of 300 demos",
+  "seed": 3,
+  "success": 0.9166666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 26,
+    "timeout": 1,
+    "dropped": 3
+   }
+  },
+  "mean_steps_success": 220.29090909090908
+ },
+ {
+  "name": "C best 150 of 300 demos",
+  "seed": 4,
+  "success": 0.8333333333333334,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 25,
+    "cracked": 5
+   },
+   "stone": {
+    "timeout": 1,
+    "success": 25,
+    "dropped": 4
+   }
+  },
+  "mean_steps_success": 214.86
+ },
+ {
+  "name": "C grip pressure only",
+  "seed": 0,
+  "success": 0.6166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 20,
+    "cracked": 10
+   },
+   "stone": {
+    "success": 17,
+    "dropped": 4,
+    "timeout": 9
+   }
+  },
+  "mean_steps_success": 226.0810810810811
+ },
+ {
+  "name": "C grip pressure only",
+  "seed": 1,
+  "success": 0.75,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 22,
+    "cracked": 7,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 23,
+    "timeout": 6,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 217.11111111111111
+ },
+ {
+  "name": "C grip pressure only",
+  "seed": 2,
+  "success": 0.8166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 22,
+    "cracked": 8
+   },
+   "stone": {
+    "success": 27,
+    "timeout": 1,
+    "dropped": 2
+   }
+  },
+  "mean_steps_success": 220.51020408163265
+ },
+ {
+  "name": "C grip pressure only",
+  "seed": 4,
+  "success": 0.6666666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 15,
+    "cracked": 13,
+    "dropped": 2
+   },
+   "stone": {
+    "success": 25,
+    "dropped": 4,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 220.075
+ },
+ {
+  "name": "C grip pressure only",
+  "seed": 3,
+  "success": 0.75,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 21,
+    "cracked": 9
+   },
+   "stone": {
+    "success": 24,
+    "timeout": 5,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 219.53333333333333
+ },
+ {
+  "name": "C load (shear) only",
+  "seed": 0,
+  "success": 0.85,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 23,
+    "dropped": 2,
+    "timeout": 5
+   }
+  },
+  "mean_steps_success": 219.33333333333334
+ },
+ {
+  "name": "C load (shear) only",
+  "seed": 1,
+  "success": 0.8666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 24,
+    "dropped": 2,
+    "timeout": 4
+   }
+  },
+  "mean_steps_success": 217.6346153846154
+ },
+ {
+  "name": "C load (shear) only",
+  "seed": 2,
+  "success": 0.9333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "success": 26,
+    "timeout": 3,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 223.875
+ },
+ {
+  "name": "C load (shear) only",
+  "seed": 4,
+  "success": 0.95,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 28,
+    "dropped": 1,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 220.35087719298247
+ },
+ {
+  "name": "C load (shear) only",
+  "seed": 3,
+  "success": 0.9333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "success": 26,
+    "dropped": 1,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 223.26785714285714
+ },
+ {
+  "name": "C slip only",
+  "seed": 0,
+  "success": 0.9333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "success": 26,
+    "dropped": 3,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 218.19642857142858
+ },
+ {
+  "name": "C slip only",
+  "seed": 2,
+  "success": 0.8,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "success": 18,
+    "timeout": 3,
+    "dropped": 9
+   }
+  },
+  "mean_steps_success": 220.54166666666666
+ },
+ {
+  "name": "C slip only",
+  "seed": 1,
+  "success": 0.95,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "success": 27,
+    "dropped": 3
+   }
+  },
+  "mean_steps_success": 218.89473684210526
+ },
+ {
+  "name": "C slip only",
+  "seed": 4,
+  "success": 0.8166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "dropped": 9,
+    "success": 19,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 218.3877551020408
+ },
+ {
+  "name": "C slip only",
+  "seed": 3,
+  "success": 0.85,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "success": 21,
+    "timeout": 5,
+    "dropped": 4
+   }
+  },
+  "mean_steps_success": 219.41176470588235
+ },
+ {
+  "name": "C no touch sensor on robot",
+  "seed": 0,
+  "success": 0.6,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 7,
+    "dropped": 12,
+    "timeout": 11
+   }
+  },
+  "mean_steps_success": 218.02777777777777,
+  "gen": {
+   "raw_fragile": {
+    "success": 20,
+    "cracked": 10
+   },
+   "medium": {
+    "dropped": 21,
+    "cracked": 5,
+    "success": 3,
+    "timeout": 1
+   },
+   "stone_light": {
+    "dropped": 20,
+    "success": 5,
+    "timeout": 5
+   },
+   "stone_heavy": {
+    "dropped": 13,
+    "timeout": 14,
+    "success": 3
+   }
+  }
+ },
+ {
+  "name": "C no touch sensor on robot",
+  "seed": 1,
+  "success": 0.7333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "dropped": 3,
+    "timeout": 11,
+    "success": 16
+   }
+  },
+  "mean_steps_success": 219.9090909090909,
+  "gen": {
+   "raw_fragile": {
+    "success": 18,
+    "cracked": 12
+   },
+   "medium": {
+    "dropped": 12,
+    "timeout": 7,
+    "success": 3,
+    "cracked": 8
+   },
+   "stone_light": {
+    "dropped": 12,
+    "timeout": 9,
+    "success": 9
+   },
+   "stone_heavy": {
+    "timeout": 21,
+    "dropped": 4,
+    "success": 5
+   }
+  }
+ },
+ {
+  "name": "C no touch sensor on robot",
+  "seed": 2,
+  "success": 0.7166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "timeout": 10,
+    "success": 14,
+    "dropped": 6
+   }
+  },
+  "mean_steps_success": 220.34883720930233,
+  "gen": {
+   "raw_fragile": {
+    "success": 24,
+    "cracked": 6
+   },
+   "medium": {
+    "dropped": 16,
+    "success": 3,
+    "timeout": 4,
+    "cracked": 7
+   },
+   "stone_light": {
+    "dropped": 11,
+    "success": 14,
+    "timeout": 5
+   },
+   "stone_heavy": {
+    "dropped": 18,
+    "timeout": 9,
+    "success": 3
+   }
+  }
+ },
+ {
+  "name": "C no touch sensor on robot",
+  "seed": 3,
+  "success": 0.6666666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 13,
+    "timeout": 13,
+    "dropped": 4
+   }
+  },
+  "mean_steps_success": 220.725,
+  "gen": {
+   "raw_fragile": {
+    "success": 20,
+    "cracked": 10
+   },
+   "medium": {
+    "success": 3,
+    "cracked": 10,
+    "dropped": 14,
+    "timeout": 3
+   },
+   "stone_light": {
+    "success": 14,
+    "dropped": 12,
+    "timeout": 4
+   },
+   "stone_heavy": {
+    "timeout": 22,
+    "dropped": 7,
+    "success": 1
+   }
+  }
+ },
+ {
+  "name": "C no touch sensor on robot",
+  "seed": 4,
+  "success": 0.6833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "dropped": 1,
+    "cracked": 1
+   },
+   "stone": {
+    "dropped": 9,
+    "success": 13,
+    "timeout": 8
+   }
+  },
+  "mean_steps_success": 220.609756097561,
+  "gen": {
+   "raw_fragile": {
+    "success": 24,
+    "cracked": 6
+   },
+   "medium": {
+    "dropped": 18,
+    "cracked": 3,
+    "success": 5,
+    "timeout": 4
+   },
+   "stone_light": {
+    "dropped": 15,
+    "success": 11,
+    "timeout": 4
+   },
+   "stone_heavy": {
+    "timeout": 19,
+    "dropped": 11
+   }
+  }
+ },
+ {
+  "name": "C servo-current estimate",
+  "seed": 3,
+  "success": 0.6333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 11,
+    "timeout": 18,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 222.8684210526316,
+  "gen": {
+   "raw_fragile": {
+    "success": 16,
+    "cracked": 14
+   },
+   "medium": {
+    "dropped": 11,
+    "cracked": 12,
+    "timeout": 6,
+    "success": 1
+   },
+   "stone_light": {
+    "timeout": 12,
+    "dropped": 10,
+    "success": 8
+   },
+   "stone_heavy": {
+    "timeout": 20,
+    "success": 4,
+    "dropped": 6
+   }
+  }
+ },
+ {
+  "name": "C servo-current estimate",
+  "seed": 1,
+  "success": 0.6833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 23,
+    "cracked": 7
+   },
+   "stone": {
+    "dropped": 5,
+    "timeout": 7,
+    "success": 18
+   }
+  },
+  "mean_steps_success": 217.390243902439,
+  "gen": {
+   "raw_fragile": {
+    "success": 17,
+    "dropped": 1,
+    "cracked": 12
+   },
+   "medium": {
+    "dropped": 14,
+    "cracked": 10,
+    "success": 2,
+    "timeout": 4
+   },
+   "stone_light": {
+    "dropped": 9,
+    "success": 15,
+    "timeout": 6
+   },
+   "stone_heavy": {
+    "timeout": 22,
+    "dropped": 7,
+    "success": 1
+   }
+  }
+ },
+ {
+  "name": "C servo-current estimate",
+  "seed": 0,
+  "success": 0.6833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "success": 13,
+    "dropped": 8,
+    "timeout": 9
+   }
+  },
+  "mean_steps_success": 224.21951219512195,
+  "gen": {
+   "raw_fragile": {
+    "success": 22,
+    "cracked": 7,
+    "dropped": 1
+   },
+   "medium": {
+    "dropped": 16,
+    "cracked": 11,
+    "timeout": 3
+   },
+   "stone_light": {
+    "dropped": 13,
+    "timeout": 5,
+    "success": 12
+   },
+   "stone_heavy": {
+    "dropped": 13,
+    "timeout": 16,
+    "success": 1
+   }
+  }
+ },
+ {
+  "name": "C servo-current estimate",
+  "seed": 4,
+  "success": 0.6666666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 23,
+    "cracked": 5,
+    "dropped": 2
+   },
+   "stone": {
+    "success": 17,
+    "timeout": 9,
+    "dropped": 4
+   }
+  },
+  "mean_steps_success": 221.725,
+  "gen": {
+   "raw_fragile": {
+    "success": 22,
+    "cracked": 8
+   },
+   "medium": {
+    "timeout": 9,
+    "dropped": 12,
+    "cracked": 6,
+    "success": 3
+   },
+   "stone_light": {
+    "timeout": 6,
+    "success": 14,
+    "dropped": 10
+   },
+   "stone_heavy": {
+    "timeout": 14,
+    "dropped": 13,
+    "success": 3
+   }
+  }
+ },
+ {
+  "name": "C servo-current estimate",
+  "seed": 2,
+  "success": 0.6833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 2
+   },
+   "stone": {
+    "timeout": 12,
+    "success": 13,
+    "dropped": 5
+   }
+  },
+  "mean_steps_success": 222.0731707317073,
+  "gen": {
+   "raw_fragile": {
+    "success": 27,
+    "cracked": 3
+   },
+   "medium": {
+    "timeout": 10,
+    "dropped": 10,
+    "cracked": 10
+   },
+   "stone_light": {
+    "dropped": 8,
+    "success": 18,
+    "timeout": 4
+   },
+   "stone_heavy": {
+    "timeout": 18,
+    "dropped": 9,
+    "success": 3
+   }
+  }
+ },
+ {
+  "name": "C glove-trained, run on servo est.",
+  "seed": 0,
+  "success": 0.0,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 29,
+    "timeout": 1
+   },
+   "stone": {
+    "timeout": 29,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": null
+ },
+ {
+  "name": "C glove-trained, run on servo est.",
+  "seed": 3,
+  "success": 0.016666666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 30
+   },
+   "stone": {
+    "success": 1,
+    "timeout": 23,
+    "dropped": 6
+   }
+  },
+  "mean_steps_success": 236.0
+ },
+ {
+  "name": "C glove-trained, run on servo est.",
+  "seed": 1,
+  "success": 0.1,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 22,
+    "success": 6,
+    "dropped": 1,
+    "timeout": 1
+   },
+   "stone": {
+    "timeout": 26,
+    "dropped": 4
+   }
+  },
+  "mean_steps_success": 248.33333333333334
+ },
+ {
+  "name": "C glove-trained, run on servo est.",
+  "seed": 4,
+  "success": 0.016666666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 30
+   },
+   "stone": {
+    "timeout": 15,
+    "dropped": 14,
+    "success": 1
+   }
+  },
+  "mean_steps_success": 301.0
+ },
+ {
+  "name": "C glove-trained, run on servo est.",
+  "seed": 2,
+  "success": 0.1,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 6,
+    "cracked": 23,
+    "dropped": 1
+   },
+   "stone": {
+    "timeout": 21,
+    "dropped": 9
+   }
+  },
+  "mean_steps_success": 246.66666666666666
+ },
+ {
+  "name": "C glove at 10 Hz",
+  "seed": 0,
+  "success": 0.8666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 25,
+    "cracked": 4,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 27,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 218.8846153846154
+ },
+ {
+  "name": "C glove at 10 Hz",
+  "seed": 1,
+  "success": 0.9,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "dropped": 3,
+    "success": 25,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 217.35185185185185
+ },
+ {
+  "name": "C glove at 10 Hz",
+  "seed": 2,
+  "success": 0.9333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 27,
+    "timeout": 2,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 217.91071428571428
+ },
+ {
+  "name": "C glove at 10 Hz",
+  "seed": 3,
+  "success": 0.9333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 27,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 218.55357142857142
+ },
+ {
+  "name": "C glove at 10 Hz",
+  "seed": 4,
+  "success": 0.9166666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 28,
+    "timeout": 1,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 217.8181818181818
+ },
+ {
+  "name": "C glove at 5 Hz",
+  "seed": 0,
+  "success": 0.7833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 25,
+    "cracked": 4,
+    "dropped": 1
+   },
+   "stone": {
+    "timeout": 7,
+    "success": 22,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 221.31914893617022
+ },
+ {
+  "name": "C glove at 5 Hz",
+  "seed": 1,
+  "success": 0.8666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 26,
+    "cracked": 4
+   },
+   "stone": {
+    "success": 26,
+    "dropped": 4
+   }
+  },
+  "mean_steps_success": 216.5
+ },
+ {
+  "name": "C glove at 5 Hz",
+  "seed": 2,
+  "success": 0.8333333333333334,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 29,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 21,
+    "timeout": 7,
+    "dropped": 2
+   }
+  },
+  "mean_steps_success": 221.56
+ },
+ {
+  "name": "C glove at 5 Hz",
+  "seed": 3,
+  "success": 0.9,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 30
+   },
+   "stone": {
+    "success": 24,
+    "dropped": 2,
+    "timeout": 4
+   }
+  },
+  "mean_steps_success": 220.14814814814815
+ },
+ {
+  "name": "C glove at 5 Hz",
+  "seed": 4,
+  "success": 0.8166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "cracked": 6
+   },
+   "stone": {
+    "success": 25,
+    "dropped": 4,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 219.16326530612244
+ },
+ {
+  "name": "C 30% heavy-handed demonstrators",
+  "seed": 0,
+  "success": 0.9,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 2,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 27,
+    "dropped": 3
+   }
+  },
+  "mean_steps_success": 216.0
+ },
+ {
+  "name": "C 30% heavy-handed demonstrators",
+  "seed": 1,
+  "success": 0.8,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 23,
+    "cracked": 7
+   },
+   "stone": {
+    "success": 25,
+    "timeout": 3,
+    "dropped": 2
+   }
+  },
+  "mean_steps_success": 216.85416666666666
+ },
+ {
+  "name": "C 30% heavy-handed demonstrators",
+  "seed": 2,
+  "success": 0.7833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 20,
+    "cracked": 9,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 27,
+    "dropped": 2,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 218.53191489361703
+ },
+ {
+  "name": "C 30% heavy-handed demonstrators",
+  "seed": 3,
+  "success": 0.8666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 23,
+    "cracked": 7
+   },
+   "stone": {
+    "success": 29,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 216.53846153846155
+ },
+ {
+  "name": "C 30% heavy-handed demonstrators",
+  "seed": 4,
+  "success": 0.8166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 7,
+    "success": 23
+   },
+   "stone": {
+    "success": 26,
+    "dropped": 4
+   }
+  },
+  "mean_steps_success": 216.46938775510205
+ },
+ {
+  "name": "C 60% heavy-handed demonstrators",
+  "seed": 0,
+  "success": 0.9166666666666666,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 25,
+    "cracked": 5
+   },
+   "stone": {
+    "success": 30
+   }
+  },
+  "mean_steps_success": 216.0909090909091
+ },
+ {
+  "name": "C 60% heavy-handed demonstrators",
+  "seed": 1,
+  "success": 0.95,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 30
+   }
+  },
+  "mean_steps_success": 214.75438596491227
+ },
+ {
+  "name": "C 60% heavy-handed demonstrators",
+  "seed": 2,
+  "success": 0.8833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 25,
+    "cracked": 5
+   },
+   "stone": {
+    "dropped": 1,
+    "success": 28,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 216.79245283018867
+ },
+ {
+  "name": "C 60% heavy-handed demonstrators",
+  "seed": 3,
+  "success": 0.8666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 23,
+    "cracked": 6,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 29,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 215.05769230769232
+ },
+ {
+  "name": "C 60% heavy-handed demonstrators",
+  "seed": 4,
+  "success": 0.7666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 9,
+    "success": 20,
+    "dropped": 1
+   },
+   "stone": {
+    "dropped": 3,
+    "success": 26,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 216.80434782608697
+ },
+ {
+  "name": "C 60% heavy-handed, labelled",
+  "seed": 0,
+  "success": 0.9,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "dropped": 1,
+    "cracked": 1
+   },
+   "stone": {
+    "success": 26,
+    "dropped": 3,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 215.24074074074073
+ },
+ {
+  "name": "C 60% heavy-handed, labelled",
+  "seed": 1,
+  "success": 0.8333333333333334,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 28,
+    "cracked": 1,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 22,
+    "dropped": 3,
+    "timeout": 5
+   }
+  },
+  "mean_steps_success": 216.98
+ },
+ {
+  "name": "C 60% heavy-handed, labelled",
+  "seed": 2,
+  "success": 0.8333333333333334,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 25,
+    "cracked": 4,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 25,
+    "timeout": 3,
+    "dropped": 2
+   }
+  },
+  "mean_steps_success": 213.98
+ },
+ {
+  "name": "C 60% heavy-handed, labelled",
+  "seed": 3,
+  "success": 0.85,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 23,
+    "cracked": 7
+   },
+   "stone": {
+    "success": 28,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 212.94117647058823
+ },
+ {
+  "name": "C 60% heavy-handed, labelled",
+  "seed": 4,
+  "success": 0.7666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 6,
+    "success": 22,
+    "dropped": 2
+   },
+   "stone": {
+    "dropped": 4,
+    "success": 24,
+    "timeout": 2
+   }
+  },
+  "mean_steps_success": 211.69565217391303
+ },
+ {
+  "name": "C human demos on varied eggs",
+  "seed": 2,
+  "success": 0.8166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "cracked": 6
+   },
+   "stone": {
+    "success": 25,
+    "dropped": 2,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 218.69387755102042,
+  "gen": {
+   "raw_fragile": {
+    "cracked": 20,
+    "success": 10
+   },
+   "medium": {
+    "cracked": 16,
+    "success": 14
+   },
+   "stone_light": {
+    "success": 29,
+    "dropped": 1
+   },
+   "stone_heavy": {
+    "dropped": 16,
+    "success": 11,
+    "timeout": 3
+   }
+  }
+ },
+ {
+  "name": "C human demos on varied eggs",
+  "seed": 1,
+  "success": 0.85,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 24,
+    "dropped": 1,
+    "cracked": 5
+   },
+   "stone": {
+    "success": 27,
+    "dropped": 3
+   }
+  },
+  "mean_steps_success": 220.05882352941177,
+  "gen": {
+   "raw_fragile": {
+    "cracked": 16,
+    "success": 13,
+    "dropped": 1
+   },
+   "medium": {
+    "success": 17,
+    "timeout": 1,
+    "dropped": 2,
+    "cracked": 10
+   },
+   "stone_light": {
+    "success": 30
+   },
+   "stone_heavy": {
+    "dropped": 17,
+    "success": 10,
+    "timeout": 3
+   }
+  }
+ },
+ {
+  "name": "C human demos on varied eggs",
+  "seed": 3,
+  "success": 0.85,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 24,
+    "timeout": 6
+   }
+  },
+  "mean_steps_success": 218.7843137254902,
+  "gen": {
+   "raw_fragile": {
+    "success": 13,
+    "cracked": 17
+   },
+   "medium": {
+    "success": 7,
+    "cracked": 21,
+    "timeout": 1,
+    "dropped": 1
+   },
+   "stone_light": {
+    "success": 29,
+    "dropped": 1
+   },
+   "stone_heavy": {
+    "success": 9,
+    "dropped": 17,
+    "timeout": 4
+   }
+  }
+ },
+ {
+  "name": "C human demos on varied eggs",
+  "seed": 0,
+  "success": 0.8666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 27,
+    "cracked": 3
+   },
+   "stone": {
+    "success": 25,
+    "dropped": 4,
+    "timeout": 1
+   }
+  },
+  "mean_steps_success": 221.51923076923077,
+  "gen": {
+   "raw_fragile": {
+    "cracked": 12,
+    "success": 18
+   },
+   "medium": {
+    "cracked": 18,
+    "success": 12
+   },
+   "stone_light": {
+    "success": 30
+   },
+   "stone_heavy": {
+    "dropped": 19,
+    "timeout": 5,
+    "success": 6
+   }
+  }
+ },
+ {
+  "name": "C human demos on varied eggs",
+  "seed": 4,
+  "success": 0.7833333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 5,
+    "success": 25
+   },
+   "stone": {
+    "dropped": 4,
+    "success": 22,
+    "timeout": 4
+   }
+  },
+  "mean_steps_success": 217.59574468085106,
+  "gen": {
+   "raw_fragile": {
+    "success": 20,
+    "cracked": 10
+   },
+   "medium": {
+    "success": 14,
+    "cracked": 11,
+    "dropped": 3,
+    "timeout": 2
+   },
+   "stone_light": {
+    "success": 29,
+    "dropped": 1
+   },
+   "stone_heavy": {
+    "timeout": 7,
+    "dropped": 14,
+    "success": 9
+   }
+  }
+ },
+ {
+  "name": "A base",
+  "seed": 0,
+  "success": 0.45,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 18,
+    "success": 11,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 16,
+    "timeout": 9,
+    "dropped": 5
+   }
+  },
+  "mean_steps_success": 223.07407407407408,
+  "gen": {
+   "raw_fragile": {
+    "cracked": 24,
+    "success": 6
+   },
+   "medium": {
+    "dropped": 7,
+    "cracked": 17,
+    "timeout": 5,
+    "success": 1
+   },
+   "stone_light": {
+    "timeout": 7,
+    "success": 17,
+    "dropped": 6
+   },
+   "stone_heavy": {
+    "dropped": 11,
+    "success": 14,
+    "timeout": 5
+   }
+  }
+ },
+ {
+  "name": "A base",
+  "seed": 2,
+  "success": 0.4666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 20,
+    "success": 10
+   },
+   "stone": {
+    "success": 18,
+    "timeout": 8,
+    "dropped": 4
+   }
+  },
+  "mean_steps_success": 219.60714285714286,
+  "gen": {
+   "raw_fragile": {
+    "cracked": 24,
+    "success": 6
+   },
+   "medium": {
+    "cracked": 15,
+    "timeout": 6,
+    "success": 2,
+    "dropped": 7
+   },
+   "stone_light": {
+    "success": 23,
+    "timeout": 4,
+    "dropped": 3
+   },
+   "stone_heavy": {
+    "success": 14,
+    "dropped": 7,
+    "timeout": 9
+   }
+  }
+ },
+ {
+  "name": "A base",
+  "seed": 3,
+  "success": 0.65,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 12,
+    "cracked": 17,
+    "dropped": 1
+   },
+   "stone": {
+    "success": 27,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 219.4102564102564,
+  "gen": {
+   "raw_fragile": {
+    "cracked": 22,
+    "success": 7,
+    "dropped": 1
+   },
+   "medium": {
+    "cracked": 21,
+    "timeout": 4,
+    "success": 2,
+    "dropped": 3
+   },
+   "stone_light": {
+    "success": 22,
+    "timeout": 5,
+    "dropped": 3
+   },
+   "stone_heavy": {
+    "success": 15,
+    "timeout": 9,
+    "dropped": 6
+   }
+  }
+ },
+ {
+  "name": "A base",
+  "seed": 1,
+  "success": 0.43333333333333335,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 14,
+    "success": 16
+   },
+   "stone": {
+    "timeout": 8,
+    "dropped": 12,
+    "success": 10
+   }
+  },
+  "mean_steps_success": 227.5,
+  "gen": {
+   "raw_fragile": {
+    "cracked": 20,
+    "success": 10
+   },
+   "medium": {
+    "success": 6,
+    "dropped": 11,
+    "cracked": 12,
+    "timeout": 1
+   },
+   "stone_light": {
+    "success": 19,
+    "dropped": 9,
+    "timeout": 2
+   },
+   "stone_heavy": {
+    "dropped": 13,
+    "success": 9,
+    "timeout": 8
+   }
+  }
+ },
+ {
+  "name": "A base",
+  "seed": 4,
+  "success": 0.43333333333333335,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 23,
+    "success": 7
+   },
+   "stone": {
+    "success": 19,
+    "dropped": 7,
+    "timeout": 4
+   }
+  },
+  "mean_steps_success": 226.80769230769232,
+  "gen": {
+   "raw_fragile": {
+    "cracked": 26,
+    "success": 4
+   },
+   "medium": {
+    "success": 8,
+    "cracked": 16,
+    "timeout": 2,
+    "dropped": 4
+   },
+   "stone_light": {
+    "success": 25,
+    "dropped": 4,
+    "timeout": 1
+   },
+   "stone_heavy": {
+    "timeout": 11,
+    "success": 11,
+    "dropped": 8
+   }
+  }
+ },
+ {
+  "name": "A + object labels",
+  "seed": 0,
+  "success": 0.5333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 14,
+    "success": 14,
+    "dropped": 2
+   },
+   "stone": {
+    "success": 18,
+    "dropped": 2,
+    "timeout": 10
+   }
+  },
+  "mean_steps_success": 227.59375
+ },
+ {
+  "name": "A + object labels",
+  "seed": 3,
+  "success": 0.5833333333333334,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 18,
+    "success": 9,
+    "dropped": 2,
+    "timeout": 1
+   },
+   "stone": {
+    "success": 26,
+    "timeout": 3,
+    "dropped": 1
+   }
+  },
+  "mean_steps_success": 222.11428571428573
+ },
+ {
+  "name": "A + object labels",
+  "seed": 2,
+  "success": 0.5666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 18,
+    "success": 12
+   },
+   "stone": {
+    "success": 22,
+    "dropped": 5,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 224.44117647058823
+ },
+ {
+  "name": "A + object labels",
+  "seed": 1,
+  "success": 0.5,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 13,
+    "success": 15,
+    "dropped": 2
+   },
+   "stone": {
+    "timeout": 11,
+    "dropped": 4,
+    "success": 15
+   }
+  },
+  "mean_steps_success": 228.23333333333332
+ },
+ {
+  "name": "A + object labels",
+  "seed": 4,
+  "success": 0.5166666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 23,
+    "success": 7
+   },
+   "stone": {
+    "success": 24,
+    "dropped": 3,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 222.09677419354838
+ },
+ {
+  "name": "A memory 6 steps",
+  "seed": 0,
+  "success": 0.45,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 19,
+    "success": 11
+   },
+   "stone": {
+    "dropped": 8,
+    "success": 16,
+    "timeout": 6
+   }
+  },
+  "mean_steps_success": 217.44444444444446
+ },
+ {
+  "name": "A memory 6 steps",
+  "seed": 3,
+  "success": 0.5333333333333333,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "success": 8,
+    "cracked": 22
+   },
+   "stone": {
+    "success": 24,
+    "timeout": 4,
+    "dropped": 2
+   }
+  },
+  "mean_steps_success": 210.4375
+ },
+ {
+  "name": "A memory 6 steps",
+  "seed": 2,
+  "success": 0.55,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 20,
+    "success": 10
+   },
+   "stone": {
+    "success": 23,
+    "dropped": 1,
+    "timeout": 6
+   }
+  },
+  "mean_steps_success": 231.5151515151515
+ },
+ {
+  "name": "A memory 6 steps",
+  "seed": 1,
+  "success": 0.4666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 13,
+    "success": 16,
+    "timeout": 1
+   },
+   "stone": {
+    "dropped": 9,
+    "timeout": 9,
+    "success": 12
+   }
+  },
+  "mean_steps_success": 220.60714285714286
+ },
+ {
+  "name": "A memory 6 steps",
+  "seed": 4,
+  "success": 0.4666666666666667,
+  "n": 60,
+  "detail": {
+   "raw": {
+    "cracked": 24,
+    "success": 6
+   },
+   "stone": {
+    "success": 22,
+    "dropped": 5,
+    "timeout": 3
+   }
+  },
+  "mean_steps_success": 210.5
+ }
+]

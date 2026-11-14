@@ -1,0 +1,359 @@
+{
+ "chosen": {
+  "kinds": [
+   "stone",
+   "raw",
+   "stone",
+   "raw",
+   "stone",
+   "raw"
+  ],
+  "env_seed": 734,
+  "A": [
+   "success",
+   "success",
+   "dropped",
+   "cracked",
+   "success",
+   "cracked"
+  ],
+  "C": [
+   "success",
+   "success",
+   "success",
+   "success",
+   "success",
+   "cracked"
+  ]
+ },
+ "averages": {
+  "A": 0.45,
+  "C": 0.9166666666666666
+ },
+ "all": [
+  {
+   "kinds": [
+    "raw",
+    "stone",
+    "stone",
+    "raw",
+    "stone",
+    "raw"
+   ],
+   "env_seed": 801,
+   "A": [
+    "cracked",
+    "timeout",
+    "dropped",
+    "cracked",
+    "success",
+    "cracked"
+   ],
+   "C": [
+    "success",
+    "success",
+    "success",
+    "cracked",
+    "success",
+    "cracked"
+   ]
+  },
+  {
+   "kinds": [
+    "stone",
+    "stone",
+    "raw",
+    "raw",
+    "raw",
+    "stone"
+   ],
+   "env_seed": 433,
+   "A": [
+    "success",
+    "timeout",
+    "dropped",
+    "cracked",
+    "cracked",
+    "timeout"
+   ],
+   "C": [
+    "success",
+    "success",
+    "success",
+    "cracked",
+    "success",
+    "dropped"
+   ]
+  },
+  {
+   "kinds": [
+    "stone",
+    "raw",
+    "stone",
+    "raw",
+    "stone",
+    "raw"
+   ],
+   "env_seed": 734,
+   "A": [
+    "success",
+    "success",
+    "dropped",
+    "cracked",
+    "success",
+    "cracked"
+   ],
+   "C": [
+    "success",
+    "success",
+    "success",
+    "success",
+    "success",
+    "cracked"
+   ]
+  },
+  {
+   "kinds": [
+    "stone",
+    "raw",
+    "stone",
+    "raw",
+    "stone",
+    "raw"
+   ],
+   "env_seed": 430,
+   "A": [
+    "success",
+    "success",
+    "dropped",
+    "cracked",
+    "success",
+    "success"
+   ],
+   "C": [
+    "success",
+    "success",
+    "success",
+    "success",
+    "success",
+    "cracked"
+   ]
+  },
+  {
+   "kinds": [
+    "raw",
+    "stone",
+    "stone",
+    "stone",
+    "raw",
+    "raw"
+   ],
+   "env_seed": 786,
+   "A": [
+    "cracked",
+    "success",
+    "dropped",
+    "success",
+    "cracked",
+    "cracked"
+   ],
+   "C": [
+    "success",
+    "success",
+    "success",
+    "dropped",
+    "cracked",
+    "cracked"
+   ]
+  },
+  {
+   "kinds": [
+    "raw",
+    "stone",
+    "stone",
+    "raw",
+    "stone",
+    "raw"
+   ],
+   "env_seed": 292,
+   "A": [
+    "cracked",
+    "timeout",
+    "dropped",
+    "cracked",
+    "success",
+    "cracked"
+   ],
+   "C": [
+    "success",
+    "dropped",
+    "success",
+    "cracked",
+    "success",
+    "cracked"
+   ]
+  },
+  {
+   "kinds": [
+    "raw",
+    "stone",
+    "raw",
+    "stone",
+    "stone",
+    "raw"
+   ],
+   "env_seed": 298,
+   "A": [
+    "cracked",
+    "success",
+    "success",
+    "success",
+    "success",
+    "success"
+   ],
+   "C": [
+    "success",
+    "success",
+    "success",
+    "dropped",
+    "success",
+    "cracked"
+   ]
+  },
+  {
+   "kinds": [
+    "raw",
+    "stone",
+    "raw",
+    "stone",
+    "stone",
+    "raw"
+   ],
+   "env_seed": 585,
+   "A": [
+    "cracked",
+    "timeout",
+    "success",
+    "success",
+    "success",
+    "cracked"
+   ],
+   "C": [
+    "success",
+    "timeout",
+    "success",
+    "success",
+    "success",
+    "success"
+   ]
+  },
+  {
+   "kinds": [
+    "stone",
+    "raw",
+    "raw",
+    "raw",
+    "stone",
+    "stone"
+   ],
+   "env_seed": 706,
+   "A": [
+    "success",
+    "success",
+    "success",
+    "cracked",
+    "success",
+    "dropped"
+   ],
+   "C": [
+    "success",
+    "success",
+    "cracked",
+    "success",
+    "success",
+    "dropped"
+   ]
+  },
+  {
+   "kinds": [
+    "stone",
+    "raw",
+    "raw",
+    "stone",
+    "stone",
+    "raw"
+   ],
+   "env_seed": 931,
+   "A": [
+    "success",
+    "success",
+    "dropped",
+    "success",
+    "timeout",
+    "cracked"
+   ],
+   "C": [
+    "success",
+    "success",
+    "success",
+    "success",
+    "success",
+    "cracked"
+   ]
+  },
+  {
+   "kinds": [
+    "stone",
+    "raw",
+    "stone",
+    "stone",
+    "raw",
+    "raw"
+   ],
+   "env_seed": 292,
+   "A": [
+    "success",
+    "success",
+    "dropped",
+    "success",
+    "cracked",
+    "cracked"
+   ],
+   "C": [
+    "success",
+    "success",
+    "success",
+    "success",
+    "cracked",
+    "cracked"
+   ]
+  },
+  {
+   "kinds": [
+    "stone",
+    "stone",
+    "raw",
+    "stone",
+    "raw",
+    "raw"
+   ],
+   "env_seed": 842,
+   "A": [
+    "success",
+    "timeout",
+    "dropped",
+    "success",
+    "cracked",
+    "cracked"
+   ],
+   "C": [
+    "success",
+    "dropped",
+    "success",
+    "dropped",
+    "cracked",
+    "dropped"
+   ]
+  }
+ ]
+}

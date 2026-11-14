@@ -1,0 +1,10 @@
+This repository includes third-party material:
+
+assets/so101/  SO-101 arm model from MuJoCo Menagerie (google-deepmind/mujoco_menagerie),
+               by The Robot Studio and contributors. Apache License 2.0, see assets/so101/LICENSE.
+               Unmodified; task-specific edits are applied at load time in eggsim/scene.py.
+
+results/human_grip.json, results/human_grip_events.csv
+               Statistics derived from OpenGraph Labs, "Ego-Tactile Manipulation" (2026),
+               huggingface.co/datasets/OpenGraphLabs-Research/ego-tactile-manipulation, CC-BY-4.0.
+               The raw dataset is not redistributed; scripts/download_data.sh fetches it.
