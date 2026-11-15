@@ -1,0 +1,372 @@
+<mujoco model="egg_roulette">
+  <compiler angle="radian" meshdir="meshes"/>
+
+  <option impratio="10" integrator="implicitfast" cone="elliptic" iterations="10" ls_iterations="20"/>
+
+  <visual>
+    <global offwidth="1920" offheight="1080"/>
+    <quality shadowsize="8192" offsamples="8"/>
+    <headlight ambient="0.32 0.32 0.34" diffuse="0.45 0.45 0.45" specular="0.05 0.05 0.05"/>
+    <map znear="0.005"/>
+    <scale forcewidth="0.02" contactwidth="0.1" contactheight="0.05" camera="0.2" framelength="0.75" framewidth="0.025"/>
+    <rgba haze="0.14 0.16 0.2 1"/>
+  </visual>
+
+  <default>
+    <mesh maxhullvert="128"/>
+    <default class="so101">
+      <joint armature="0.005" damping="1" frictionloss="0.1"/>
+      <general input="pos" biastype="affine" gainprm="50" biasprm="0 -50"/>
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2"/>
+      </default>
+      <default class="collision">
+        <geom group="3"/>
+      </default>
+      <default class="collision_gripper">
+        <geom condim="6" group="3" priority="1" friction="1 0.005 0.0005" solref="0.01" rgba="1 0 0 1"/>
+      </default>
+      <default class="collision_gripper_mesh">
+        <geom condim="6" group="4" priority="1" friction="1 0.005 0.0005" solref="0.01" rgba="1 0 0 1"/>
+      </default>
+    </default>
+    <default class="sts3215">
+      <joint armature="0.028" damping="0.6" frictionloss="0.052"/>
+      <geom contype="0" conaffinity="0"/>
+      <general forcerange="-2.94 2.94" input="pos" biastype="affine" gainprm="998.22" biasprm="0 -998.22 -2.731"/>
+    </default>
+    <default class="backlash">
+      <joint range="-0.0087267 0.0087267" armature="0.01" damping="0.01" limited="true"/>
+    </default>
+  </default>
+
+  <asset>
+    <texture type="skybox" colorspace="auto" name="sky" builtin="gradient" rgb1="0.3 0.34 0.4" rgb2="0.06 0.07 0.09" width="512" height="3072"/>
+    <material name="base_motor_holder_so101_v1_material" rgba="1 0.82 0.12 1"/>
+    <material name="base_so101_v2_material" rgba="1 0.82 0.12 1"/>
+    <material name="sts3215_03a_v1_material" rgba="0.1 0.1 0.1 1"/>
+    <material name="waveshare_mounting_plate_so101_v2_material" rgba="1 0.82 0.12 1"/>
+    <material name="motor_holder_so101_base_v1_material" rgba="1 0.82 0.12 1"/>
+    <material name="rotation_pitch_so101_v1_material" rgba="1 0.82 0.12 1"/>
+    <material name="upper_arm_so101_v1_material" rgba="1 0.82 0.12 1"/>
+    <material name="under_arm_so101_v1_material" rgba="1 0.82 0.12 1"/>
+    <material name="motor_holder_so101_wrist_v1_material" rgba="1 0.82 0.12 1"/>
+    <material name="sts3215_03a_no_horn_v1_material" rgba="0.1 0.1 0.1 1"/>
+    <material name="wrist_roll_pitch_so101_v2_material" rgba="1 0.82 0.12 1"/>
+    <material name="wrist_roll_follower_so101_v1_material" rgba="1 0.82 0.12 1"/>
+    <material name="moving_jaw_so101_v1_material" rgba="1 0.82 0.12 1"/>
+    <material name="table" texrepeat="0.9 0.9" texuniform="true" specular="0.25" shininess="0.3" reflectance="0.03"/>
+    <material name="carton" texrepeat="4 4" texuniform="true" specular="0.05"/>
+    <material name="basket" specular="0.15" shininess="0.2" rgba="0.3 0.19 0.11 1"/>
+    <material name="shell" specular="0.3" rgba="0.97 0.91 0.8 1"/>
+    <material name="yolk" specular="0.6" shininess="0.9" rgba="1 0.62 0.05 1"/>
+    <material name="white" specular="0.7" shininess="0.9" rgba="1 1 0.96 0.85"/>
+    <mesh name="waveshare_mounting_plate_so101_v2" content_type="model/stl" file="waveshare_mounting_plate_so101_v2.stl"/>
+    <mesh name="sts3215_03a_v1" content_type="model/stl" file="sts3215_03a_v1.stl"/>
+    <mesh name="motor_holder_so101_base_v1" content_type="model/stl" file="motor_holder_so101_base_v1.stl"/>
+    <mesh name="wrist_roll_follower_so101_v1" content_type="model/stl" file="wrist_roll_follower_so101_v1.stl"/>
+    <mesh name="moving_jaw_so101_v1" content_type="model/stl" file="moving_jaw_so101_v1.stl"/>
+    <mesh name="base_motor_holder_so101_v1" content_type="model/stl" file="base_motor_holder_so101_v1.stl"/>
+    <mesh name="upper_arm_so101_v1" content_type="model/stl" file="upper_arm_so101_v1.stl"/>
+    <mesh name="wrist_roll_pitch_so101_v2" content_type="model/stl" file="wrist_roll_pitch_so101_v2.stl"/>
+    <mesh name="under_arm_so101_v1" content_type="model/stl" file="under_arm_so101_v1.stl"/>
+    <mesh name="rotation_pitch_so101_v1" content_type="model/stl" file="rotation_pitch_so101_v1.stl"/>
+    <mesh name="motor_holder_so101_wrist_v1" content_type="model/stl" file="motor_holder_so101_wrist_v1.stl"/>
+    <mesh name="sts3215_03a_no_horn_v1" content_type="model/stl" file="sts3215_03a_no_horn_v1.stl"/>
+    <mesh name="base_so101_v2" content_type="model/stl" file="base_so101_v2.stl"/>
+    <mesh name="moving_jaw_so101_gripper_v1" content_type="model/stl" file="moving_jaw_so101_gripper_v1.stl"/>
+    <mesh name="wrist_roll_follower_so101_camera_mount" content_type="model/stl" file="wrist_roll_follower_so101_camera_mount.stl"/>
+    <mesh name="wrist_roll_follower_so101_gripper_part0_v1" content_type="model/stl" file="wrist_roll_follower_so101_gripper_part0_v1.stl" maxhullvert="64"/>
+    <mesh name="moving_jaw_so101_gripper_part0_v1" content_type="model/stl" file="moving_jaw_so101_gripper_part0_v1.stl" maxhullvert="64"/>
+    <mesh name="moving_jaw_so101_gripper_part1_v1" content_type="model/stl" file="moving_jaw_so101_gripper_part1_v1.stl" maxhullvert="64"/>
+  </asset>
+
+  <worldbody>
+    <geom name="table" size="0 0 0.05" type="plane" friction="0.8 0.01 0.001" material="table"/>
+    <camera name="front" quat="0.617264 0.379413 0.360917 0.587171" pos="0.62 -0.02 0.36" fovy="50"/>
+    <camera name="side" quat="0.86553 0.500857 0 0" pos="0.24 -0.55 0.3" fovy="48"/>
+    <camera name="close" quat="0.488706 0.332568 0.453777 0.666822" pos="0.46 0.18 0.2"/>
+    <camera name="hero" quat="0.789415 0.433528 0.209202 0.380937" pos="0.5 -0.36 0.3" fovy="42"/>
+    <light pos="0.35 0.25 1.1" dir="-0.240008 -0.144005 -0.960031" diffuse="0.62 0.6 0.56" specular="0.25 0.25 0.25"/>
+    <light castshadow="false" pos="-0.5 -0.6 0.9" dir="0.430528 0.478365 -0.765384" diffuse="0.22 0.24 0.28"/>
+    <body name="base" childclass="so101">
+      <inertial pos="0.0137179 -5.19711e-05 0.0334843" quat="0.420519 0.558763 0.57198 0.428704" mass="0.147" diaginertia="0.000136127 0.000131807 0.000113233"/>
+      <geom class="visual" pos="-0.006365 -9.9e-05 -0.0024" quat="0.5 0.5 0.5 0.5" material="base_motor_holder_so101_v1_material" mesh="base_motor_holder_so101_v1"/>
+      <geom class="visual" pos="-0.006365 0 -0.0024" quat="0.5 0.5 0.5 0.5" material="base_so101_v2_material" mesh="base_so101_v2"/>
+      <geom class="visual" pos="0.0263353 0 0.0437" quat="1 0 0 0" material="sts3215_03a_v1_material" mesh="sts3215_03a_v1"/>
+      <geom class="visual" pos="-0.0309827 -0.000199 0.0474" quat="0.5 0.5 0.5 0.5" material="waveshare_mounting_plate_so101_v2_material" mesh="waveshare_mounting_plate_so101_v2"/>
+      <site name="baseframe" group="3"/>
+      <body name="shoulder" pos="0.0388353 0 0.0624" quat="0 0 -1 0">
+        <inertial pos="-0.0307604 -1.7e-05 -0.0252713" quat="0.999865 0.00149568 0.0097084 0.0132043" mass="0.100006" diaginertia="8.37836e-05 8.10388e-05 2.39552e-05"/>
+        <joint name="shoulder_pan" class="sts3215" range="-1.91986 1.91986"/>
+        <geom class="visual" pos="-0.030399 0.000422 -0.0417" quat="0.5 0.5 0.5 -0.5" material="sts3215_03a_v1_material" mesh="sts3215_03a_v1"/>
+        <geom class="collision" size="0.023 0.015 0.01" pos="-0.030399 0.000422 -0.0387" quat="0.5 0.5 0.5 -0.5" type="box"/>
+        <geom class="visual" pos="-0.067599 -0.0001778 0.01585" quat="0.5 0.5 -0.5 0.5" material="motor_holder_so101_base_v1_material" mesh="motor_holder_so101_base_v1"/>
+        <geom class="collision" size="0.038 0.025 0.02" pos="-0.025 0 0" quat="0.5 0.5 -0.5 0.5" type="box"/>
+        <geom class="visual" pos="0.012201 2.2e-05 0.0464" quat="0.707107 -0.707107 0 0" material="rotation_pitch_so101_v1_material" mesh="rotation_pitch_so101_v1"/>
+        <body name="upper_arm" pos="-0.0303992 -0.0182778 -0.0542" quat="0.5 -0.5 -0.5 -0.5">
+          <inertial pos="-0.089847 -0.008382 0.018409" quat="0.453195 0.454063 0.541891 0.542951" mass="0.103" diaginertia="0.000150873 0.000142487 3.72451e-05"/>
+          <joint name="shoulder_lift" class="sts3215" range="-1.74533 1.74533"/>
+          <geom class="visual" pos="-0.11257 -0.0155 0.0187" quat="0 -0.707107 0.707107 0" material="sts3215_03a_v1_material" mesh="sts3215_03a_v1"/>
+          <geom class="collision" size="0.01 0.07 0.03" pos="-0.06 0 0.02" quat="0 -0.707107 0.707107 0" type="box"/>
+          <geom class="visual" pos="-0.065085 0.012 0.0182" quat="0 1 0 0" material="upper_arm_so101_v1_material" mesh="upper_arm_so101_v1"/>
+          <geom class="collision" size="0.01 0.02 0.015" pos="-0.12 -0.014 0.0182" quat="0 1 0 0" type="box"/>
+          <body name="lower_arm" pos="-0.11257 -0.028 0" quat="0.707107 0 0 0.707107">
+            <inertial pos="-0.09807 0.0032438 0.018283" quat="0.510729 0.517006 0.487966 0.483477" mass="0.104" diaginertia="0.000160262 0.000145304 2.83125e-05"/>
+            <joint name="elbow_flex" class="sts3215" range="-1.69 1.69"/>
+            <geom class="visual" pos="-0.06485 -0.032 0.0182" quat="0 1 0 0" material="under_arm_so101_v1_material" mesh="under_arm_so101_v1"/>
+            <geom class="collision" size="0.07 0.01 0.03" pos="-0.05 0 0.0182" quat="0 1 0 0" type="box"/>
+            <geom class="visual" pos="-0.06485 -0.032 0.018" quat="0 -1 0 0" material="motor_holder_so101_wrist_v1_material" mesh="motor_holder_so101_wrist_v1"/>
+            <geom class="collision" size="0.023 0.013 0.018" pos="-0.125 0.005 0.018" quat="0 -1 0 0" type="box"/>
+            <geom class="visual" pos="-0.1224 0.0052 0.0187" quat="0 0 1 0" material="sts3215_03a_v1_material" mesh="sts3215_03a_v1"/>
+            <body name="wrist" pos="-0.1349 0.0052 0" quat="0.707107 0 0 -0.707107">
+              <inertial pos="-0.000103312 -0.0386143 0.0281156" quat="0.967143 0.254226 0.00162226 -0.000146307" mass="0.079" diaginertia="3.68265e-05 2.74474e-05 1.89434e-05"/>
+              <joint name="wrist_flex" class="sts3215" range="-1.65806 1.65806"/>
+              <geom class="visual" pos="0 -0.0424 0.0306" quat="0.5 0.5 0.5 -0.5" material="sts3215_03a_no_horn_v1_material" mesh="sts3215_03a_no_horn_v1"/>
+              <geom class="collision" size="0.029 0.015 0.018" pos="0 -0.0424 0.0256" quat="0.5 0.5 0.5 -0.5" type="box"/>
+              <geom class="visual" pos="0 -0.028 0.0181" quat="0.5 -0.5 -0.5 -0.5" material="wrist_roll_pitch_so101_v2_material" mesh="wrist_roll_pitch_so101_v2"/>
+              <geom class="collision" size="0.027 0.01 0.03" pos="0 -0.02 0.0191" quat="0.5 -0.5 -0.5 -0.5" type="box"/>
+              <body name="gripper" pos="0 -0.0611 0.0181" quat="0.0172091 -0.0172091 0.706897 0.706897">
+                <inertial pos="0.000214 0.000245 -0.025187" quat="0.600717 0.355993 0.35863 0.61951" mass="0.087" diaginertia="4.33735e-05 3.77229e-05 2.42839e-05"/>
+                <joint name="wrist_roll" class="sts3215" range="-2.74385 2.84121"/>
+                <geom class="visual" pos="0.0077 0.0001 -0.0234" quat="0.707107 -0.707107 0 0" friction="0.8 0.012 0.002" solimp="0.85 0.95 0.004" material="sts3215_03a_v1_material" mesh="sts3215_03a_v1"/>
+                <geom class="visual" pos="0 -0.000218 0.00095" quat="0 1 0 0" friction="0.8 0.012 0.002" solimp="0.85 0.95 0.004" material="wrist_roll_follower_so101_v1_material" mesh="wrist_roll_follower_so101_v1"/>
+                <geom class="collision" size="0.01 0.01 0.018" pos="0 -0.000218 0.00095" quat="0 1 0 0" type="box" friction="0.8 0.012 0.002" solimp="0.85 0.95 0.004"/>
+                <geom name="fixed_jaw_box1" class="collision_gripper" size="0.0325 0.015 0.015" pos="-0.0025 0 -0.022" type="box" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                <geom name="fixed_jaw_box2" class="collision_gripper" size="0.01 0.015 0.005" pos="-0.024 0 -0.04" type="box" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                <geom name="fixed_jaw_sph_tip1" class="collision_gripper" size="0.00075" pos="-0.0081 0 -0.101" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                <geom name="fixed_jaw_sph_tip2" class="collision_gripper" size="0.00075" pos="-0.0081 0.0035 -0.0975" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                <geom name="fixed_jaw_sph_tip3" class="collision_gripper" size="0.00075" pos="-0.0081 -0.0035 -0.0975" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                <geom class="collision_gripper_mesh" pos="0 -0.000218 0.00095" quat="0 1 0 0" type="mesh" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0" mesh="wrist_roll_follower_so101_gripper_part0_v1"/>
+                <geom name="fixed_jaw_box3" class="collision_gripper" size="0.0011 0.002" pos="-0.009 0 -0.103" quat="0.707388 0.706825 0 0" type="capsule" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                <geom name="fixed_jaw_box4" class="collision_gripper" size="0.001 0.004 0.004" pos="-0.009 0 -0.0982" type="box" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                <geom name="fixed_jaw_box5" class="collision_gripper" size="0.001 0.005 0.006" pos="-0.0108 0 -0.0905" type="box" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                <geom name="fixed_jaw_box6" class="collision_gripper" size="0.001 0.009 0.008" pos="-0.0125 0 -0.0727" type="box" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                <geom name="fixed_jaw_box7" class="collision_gripper" size="0.001 0.01 0.008" pos="-0.0143 0 -0.053" type="box" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                <site name="gripperframe" pos="0.012 -0.000218 -0.098127" quat="0.707107 0 0.707107 0" group="3"/>
+                <site name="pad_fixed" size="0.0045 0.0065 0.0125" pos="-0.0088 0 -0.0945" type="box" group="4" rgba="0.1 0.8 0.9 0.35"/>
+                <body name="camera_mount">
+                  <geom class="visual" pos="0 -0.000218 0.00095" quat="0 1 0 0" mass="0.012" material="wrist_roll_follower_so101_v1_material" mesh="wrist_roll_follower_so101_camera_mount"/>
+                  <geom name="wrist_camera_pcb" size="0.019 0.019 0.0005" pos="-0.00101 0.05958 -0.04515" quat="0.95828 -0.285792 -0.001556 0.004547" type="box" contype="0" conaffinity="0" group="2" material="sts3215_03a_v1_material"/>
+                  <geom name="wrist_camera_lens" size="0.007 0.00475" pos="-0.00298 0.05669 -0.04954" quat="0.95828 -0.285792 -0.001556 0.004547" type="cylinder" contype="0" conaffinity="0" group="1" mass="0" material="sts3215_03a_v1_material"/>
+                  <geom name="camera_box1" class="collision_gripper" size="0.015 0.015 0.003" pos="-0.0025 0.03 -0.03" type="box" mass="0"/>
+                  <geom name="camera_box2" class="collision_gripper" size="0.021 0.021 0.003" pos="-0.001 0.06 -0.04" quat="0.962425 -0.271547 0 0" type="box" mass="0"/>
+                  <camera name="wrist_cam" quat="0.95828 -0.285792 -0.001556 0.004547" pos="-0.00296 0.05436 -0.0531" fovy="61"/>
+                </body>
+                <body name="moving_jaw_so101_v1" pos="0.0202 0.0188 -0.0234" quat="0.707107 0.707107 0 0">
+                  <inertial pos="-0.001575 -0.0300244 0.0192755" quat="0.695265 0.717965 -0.0245618 -0.0230097" mass="0.012" diaginertia="6.63582e-06 5.29092e-06 1.86523e-06"/>
+                  <joint name="gripper" class="sts3215" range="-0.174533 1.74533" armature="0.003" damping="0.04" frictionloss="0.004"/>
+                  <geom class="visual" pos="0 0 0.0189" quat="1 0 0 0" friction="0.8 0.012 0.002" solimp="0.85 0.95 0.004" material="moving_jaw_so101_v1_material" mesh="moving_jaw_so101_v1"/>
+                  <geom class="collision_gripper_mesh" pos="0 0 0.0189" quat="1 0 0 0" type="mesh" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0" mesh="moving_jaw_so101_gripper_part0_v1"/>
+                  <geom class="collision_gripper_mesh" pos="0 0 0.0189" quat="1 0 0 0" type="mesh" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0" mesh="moving_jaw_so101_gripper_part1_v1"/>
+                  <geom name="moving_jaw_box1" class="collision_gripper" size="0.01 0.01 0.015" pos="0 -0.013 0.019" type="box" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                  <geom name="moving_jaw_sph_tip1" class="collision_gripper" size="0.00075" pos="-0.012 -0.078 0.0192" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                  <geom name="moving_jaw_sph_tip2" class="collision_gripper" size="0.00075" pos="-0.012 -0.0745 0.0225" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                  <geom name="moving_jaw_sph_tip3" class="collision_gripper" size="0.00075" pos="-0.012 -0.0745 0.0155" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                  <geom name="moving_jaw_box2" class="collision_gripper" size="0.001 0.004 0.004" pos="-0.0113 -0.076 0.01875" type="box" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                  <geom name="moving_jaw_box3" class="collision_gripper" size="0.001 0.005 0.006" pos="-0.0093 -0.067 0.01875" type="box" friction="0.8 0.012 0.002" solref="0.02" solimp="0.85 0.95 0.004" mass="0"/>
+                  <site name="pad_moving" size="0.0045 0.0185 0.0075" pos="-0.0104 -0.066 0.0194" type="box" group="4" rgba="0.1 0.8 0.9 0.35"/>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+    <body name="carton">
+      <geom size="0.068 0.105 0.003" pos="0.187 0.104 0.003" type="box" material="carton"/>
+      <geom size="0.0035 0.0285 0.007" pos="0.1835 0.04 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0035 0.0285 0.007" pos="0.1265 0.04 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0285 0.0035 0.007" pos="0.155 0.0685 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0285 0.0035 0.007" pos="0.155 0.0115 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0055" pos="0.167374 0.0523744 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.167374 0.0276256 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.142626 0.0523744 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.142626 0.0276256 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0035 0.0285 0.007" pos="0.2475 0.04 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0035 0.0285 0.007" pos="0.1905 0.04 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0285 0.0035 0.007" pos="0.219 0.0685 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0285 0.0035 0.007" pos="0.219 0.0115 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0055" pos="0.231374 0.0523744 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.231374 0.0276256 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.206626 0.0523744 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.206626 0.0276256 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0035 0.0285 0.007" pos="0.1835 0.104 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0035 0.0285 0.007" pos="0.1265 0.104 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0285 0.0035 0.007" pos="0.155 0.1325 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0285 0.0035 0.007" pos="0.155 0.0755 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0055" pos="0.167374 0.116374 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.167374 0.0916256 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.142626 0.116374 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.142626 0.0916256 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0035 0.0285 0.007" pos="0.2475 0.104 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0035 0.0285 0.007" pos="0.1905 0.104 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0285 0.0035 0.007" pos="0.219 0.1325 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0285 0.0035 0.007" pos="0.219 0.0755 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0055" pos="0.231374 0.116374 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.231374 0.0916256 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.206626 0.116374 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.206626 0.0916256 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0035 0.0285 0.007" pos="0.1835 0.168 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0035 0.0285 0.007" pos="0.1265 0.168 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0285 0.0035 0.007" pos="0.155 0.1965 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0285 0.0035 0.007" pos="0.155 0.1395 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0055" pos="0.167374 0.180374 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.167374 0.155626 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.142626 0.180374 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.142626 0.155626 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0035 0.0285 0.007" pos="0.2475 0.168 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0035 0.0285 0.007" pos="0.1905 0.168 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0285 0.0035 0.007" pos="0.219 0.1965 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0285 0.0035 0.007" pos="0.219 0.1395 0.013" type="box" contype="0" conaffinity="0" material="carton"/>
+      <geom size="0.0055" pos="0.231374 0.180374 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.231374 0.155626 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.206626 0.180374 0.01" friction="0.3 0.01 0.001" material="carton"/>
+      <geom size="0.0055" pos="0.206626 0.155626 0.01" friction="0.3 0.01 0.001" material="carton"/>
+    </body>
+    <body name="basket" pos="0.17 -0.13 0">
+      <geom size="0.075 0.075 0.003" pos="0 0 0.003" type="box" friction="1.5 0.05 0.01" material="basket"/>
+      <geom size="0.004 0.075 0.0175" pos="0.075 0 0.0175" type="box" material="basket"/>
+      <geom size="0.004 0.075 0.0175" pos="-0.075 0 0.0175" type="box" material="basket"/>
+      <geom size="0.075 0.004 0.0175" pos="0 0.075 0.0175" type="box" material="basket"/>
+      <geom size="0.075 0.004 0.0175" pos="0 -0.075 0.0175" type="box" material="basket"/>
+    </body>
+    <body name="egg0" pos="5 5 0.03">
+      <joint name="egg0" type="free"/>
+      <geom name="egg0" size="0.021 0.021 0.026" type="ellipsoid" condim="4" friction="0.8 0.01 0.001" solref="0.005" solimp="0.95 0.99" mass="0.06" material="shell"/>
+    </body>
+    <body name="yolk0" pos="5 6 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.024 0.024 0.007" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.02" material="yolk"/>
+    </body>
+    <body name="white0" pos="5 6.3 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.052 0.04 0.003" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.02" material="white"/>
+    </body>
+    <body name="shellA0" pos="5 6.6 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.017 0.013 0.006" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.006" material="shell"/>
+    </body>
+    <body name="shellB0" pos="5 6.9 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.014 0.011 0.005" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.006" material="shell"/>
+    </body>
+    <body name="egg1" pos="5.2 5 0.03">
+      <joint name="egg1" type="free"/>
+      <geom name="egg1" size="0.021 0.021 0.026" type="ellipsoid" condim="4" friction="0.8 0.01 0.001" solref="0.005" solimp="0.95 0.99" mass="0.06" material="shell"/>
+    </body>
+    <body name="yolk1" pos="5.2 6 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.024 0.024 0.007" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.02" material="yolk"/>
+    </body>
+    <body name="white1" pos="5.2 6.3 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.052 0.04 0.003" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.02" material="white"/>
+    </body>
+    <body name="shellA1" pos="5.2 6.6 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.017 0.013 0.006" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.006" material="shell"/>
+    </body>
+    <body name="shellB1" pos="5.2 6.9 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.014 0.011 0.005" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.006" material="shell"/>
+    </body>
+    <body name="egg2" pos="5.4 5 0.03">
+      <joint name="egg2" type="free"/>
+      <geom name="egg2" size="0.021 0.021 0.026" type="ellipsoid" condim="4" friction="0.8 0.01 0.001" solref="0.005" solimp="0.95 0.99" mass="0.06" material="shell"/>
+    </body>
+    <body name="yolk2" pos="5.4 6 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.024 0.024 0.007" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.02" material="yolk"/>
+    </body>
+    <body name="white2" pos="5.4 6.3 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.052 0.04 0.003" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.02" material="white"/>
+    </body>
+    <body name="shellA2" pos="5.4 6.6 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.017 0.013 0.006" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.006" material="shell"/>
+    </body>
+    <body name="shellB2" pos="5.4 6.9 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.014 0.011 0.005" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.006" material="shell"/>
+    </body>
+    <body name="egg3" pos="5.6 5 0.03">
+      <joint name="egg3" type="free"/>
+      <geom name="egg3" size="0.021 0.021 0.026" type="ellipsoid" condim="4" friction="0.8 0.01 0.001" solref="0.005" solimp="0.95 0.99" mass="0.06" material="shell"/>
+    </body>
+    <body name="yolk3" pos="5.6 6 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.024 0.024 0.007" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.02" material="yolk"/>
+    </body>
+    <body name="white3" pos="5.6 6.3 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.052 0.04 0.003" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.02" material="white"/>
+    </body>
+    <body name="shellA3" pos="5.6 6.6 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.017 0.013 0.006" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.006" material="shell"/>
+    </body>
+    <body name="shellB3" pos="5.6 6.9 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.014 0.011 0.005" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.006" material="shell"/>
+    </body>
+    <body name="egg4" pos="5.8 5 0.03">
+      <joint name="egg4" type="free"/>
+      <geom name="egg4" size="0.021 0.021 0.026" type="ellipsoid" condim="4" friction="0.8 0.01 0.001" solref="0.005" solimp="0.95 0.99" mass="0.06" material="shell"/>
+    </body>
+    <body name="yolk4" pos="5.8 6 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.024 0.024 0.007" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.02" material="yolk"/>
+    </body>
+    <body name="white4" pos="5.8 6.3 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.052 0.04 0.003" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.02" material="white"/>
+    </body>
+    <body name="shellA4" pos="5.8 6.6 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.017 0.013 0.006" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.006" material="shell"/>
+    </body>
+    <body name="shellB4" pos="5.8 6.9 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.014 0.011 0.005" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.006" material="shell"/>
+    </body>
+    <body name="egg5" pos="6 5 0.03">
+      <joint name="egg5" type="free"/>
+      <geom name="egg5" size="0.021 0.021 0.026" type="ellipsoid" condim="4" friction="0.8 0.01 0.001" solref="0.005" solimp="0.95 0.99" mass="0.06" material="shell"/>
+    </body>
+    <body name="yolk5" pos="6 6 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.024 0.024 0.007" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.02" material="yolk"/>
+    </body>
+    <body name="white5" pos="6 6.3 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.052 0.04 0.003" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.02" material="white"/>
+    </body>
+    <body name="shellA5" pos="6 6.6 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.017 0.013 0.006" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.006" material="shell"/>
+    </body>
+    <body name="shellB5" pos="6 6.9 0.02" gravcomp="1">
+      <joint type="free"/>
+      <geom size="0.014 0.011 0.005" type="ellipsoid" contype="0" conaffinity="0" friction="2 0.1 0.1" solref="0.02 1.5" mass="0.006" material="shell"/>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <general name="shoulder_pan" class="sts3215" joint="shoulder_pan" ctrlrange="-1.91986 1.91986"/>
+    <general name="shoulder_lift" class="sts3215" joint="shoulder_lift" ctrlrange="-1.74533 1.74533"/>
+    <general name="elbow_flex" class="sts3215" joint="elbow_flex" ctrlrange="-1.69 1.69"/>
+    <general name="wrist_flex" class="sts3215" joint="wrist_flex" ctrlrange="-1.65806 1.65806"/>
+    <general name="wrist_roll" class="sts3215" joint="wrist_roll" ctrlrange="-2.74385 2.84121"/>
+    <general name="gripper" class="sts3215" joint="gripper" ctrlrange="-0.6 0.6" ctrllimited="true" forcelimited="false" input="" gainprm="1" biasprm="0 0 -0.02"/>
+  </actuator>
+
+  <sensor>
+    <touch site="pad_fixed" name="touch_fixed"/>
+    <touch site="pad_moving" name="touch_moving"/>
+
+    <actuatorfrc actuator="gripper" name="gripper_torque"/>
+    <jointpos joint="gripper" name="gripper_pos"/>
+  </sensor>
+</mujoco>

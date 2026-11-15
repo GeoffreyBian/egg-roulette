@@ -1,0 +1,15 @@
+policy: max |action - python| over 2679 steps = 1.96e-7
+replay C_n25 raw   python=success  js=success  tracks for 214/214 steps (grip err 0.0079 N)
+replay C_n25 stone python=success  js=success  tracks for 165/227 steps (grip err 0.0106 N)
+replay C_n25 raw   python=cracked  js=cracked  tracks for 167/167 steps (grip err 0.0046 N)
+replay C_n25 stone python=success  js=success  tracks for 232/232 steps (grip err 0.0740 N)
+replay C_n25 raw   python=success  js=success  tracks for 209/209 steps (grip err 0.0004 N)
+replay C_n25 stone python=success  js=success  tracks for 136/219 steps (grip err 0.0049 N)
+replay A_n25 raw   python=success  js=success  tracks for 240/240 steps (grip err 0.0082 N)
+replay A_n25 stone python=dropped  js=dropped  tracks for 103/287 steps (grip err 0.0462 N)
+replay A_n25 raw   python=cracked  js=cracked  tracks for 102/102 steps (grip err 0.0003 N)
+replay A_n25 stone python=success  js=success  tracks for 214/214 steps (grip err 0.0116 N)
+replay A_n25 raw   python=success  js=success  tracks for 238/238 steps (grip err 0.0009 N)
+replay A_n25 stone python=timeout  js=timeout  tracks for 330/330 steps (grip err 0.0000 N)
+closed loop C_n25 (seed 0): js 85% on 60 eggs, python 92% on 60; ±7 pts at 95%  {"raw:success":25,"stone:success":26,"stone:dropped":4,"raw:cracked":5}  0.85 s/egg
+closed loop A_n25 (seed 0): js 50% on 60 eggs, python 45% on 60; ±13 pts at 95%  {"raw:cracked":15,"stone:timeout":7,"raw:success":13,"stone:success":17,"stone:dropped":6,"raw:dropped":2}  0.89 s/egg

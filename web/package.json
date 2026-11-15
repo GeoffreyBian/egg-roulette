@@ -1,0 +1,12 @@
+{
+  "name": "egg-roulette-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node test/parity.mjs",
+    "serve": "python3 -m http.server 8123"
+  },
+  "devDependencies": {
+    "@mujoco/mujoco": "3.17.0"
+  }
+}

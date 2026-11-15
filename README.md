@@ -24,11 +24,16 @@ The human grip strategy is fitted to 718 real grasps from a 160-taxel glove data
 simulated, and the task was built so that looks mislead. Read [Limitations](#limitations) before quoting
 a number.
 
+**[Run it in your browser →](https://geoffreybian.github.io/egg-roulette/)** The same MuJoCo model, compiled
+to WebAssembly, with the trained policies running live. Pick the training data, swap the eggs, change the pad
+friction or unplug the touch sensor, and push eggs around with the mouse.
+
 ## Contents
 
 - [What's simulated](#whats-simulated)
 - [Physics checks](#physics-checks)
 - [Results](#results)
+- [In the browser](#in-the-browser)
 - [Limitations](#limitations)
 - [Reproduce](#reproduce)
 
@@ -192,6 +197,33 @@ Each row changes one thing about the 93% touch policy and retrains 5 seeds.
   data, and marking them doesn't help.
 - **Robot-only policies stay stuck** at 49% with egg-kind labels (54%) or 6 steps of memory (49%).
 
+## In the browser
+
+[geoffreybian.github.io/egg-roulette](https://geoffreybian.github.io/egg-roulette/) runs the study live: MuJoCo
+3.17's official WebAssembly build steps this repo's MJCF at 500 Hz, and the policies run at 30 Hz from their
+trained weights. Nothing is pre-recorded. `web/` holds the app; `python -m eggsim web-export` writes its assets.
+
+- **What it reuses.** The MJCF is `scene.py`'s spec written out with `MjSpec.to_xml()`. Visual-only meshes are
+  decimated by vertex clustering (they have `contype=0` and every body has an explicit `<inertial>`, so they
+  don't touch the dynamics). The three jaw collision meshes are copied unchanged. Policies ship as float16.
+- **What's ported.** `web/sim/env.js` is `env.py` line for line: the damped least-squares IK, the 500 Hz jaw
+  current loop, contact readout with `mj_contactForce`, the crack swap. `web/sim/policy.js` is the MLP, history
+  stacking, action chunks and temporal ensembling.
+- **How it's checked.** `npm test` in `web/` runs `test/parity.mjs` against episodes recorded from Python.
+  Fed Python's inputs, the JS policy's actions match to 2e-7 over 2,679 steps. Replaying Python's actions
+  through the WebAssembly physics reproduces all 12 recorded outcomes, with squeeze force within 0.07 N for as
+  long as the trajectories track (contact is chaotic, so native and WebAssembly floating point eventually
+  part ways). Closed loop on 60 fresh eggs, the browser gets 85% for the touch policy (Python: 92%) and 50% for
+  robot demos only (Python: 45%), within sampling noise.
+- **Choices.** The 16 policies of the gain sweep (4 conditions x 4 robot-demo counts), each the seed closest
+  to its condition's median, plus six retrained ablations of the touch policy (no action chunks, 50 human
+  demos, glove 300 ms late, pressure only, servo-current estimate, varied eggs), each reproducing its ablation
+  score exactly. Test-time knobs: pad friction, camera noise, touch source (pads, servo estimate, unplugged),
+  never-seen eggs and a custom egg. Training stays offline.
+- **Interaction.** Shift-drag (or "Push eggs" on a phone) attaches a critically damped spring to an egg through
+  `xfrc_applied`, applied every physics step. Contact-force arrows, the pad sensor sites and the collision
+  geometry can be shown. A timeline scrubs back through the run.
+
 ## Limitations
 
 - **Not real robot data.** The glove wearer is a scripted controller whose grip parameters come from real
@@ -218,6 +250,8 @@ python -m eggsim ablations                # 160 policies (about 3.5 h)
 python -m eggsim robustness               # 12,000 test eggs (about 20 min)
 python -m eggsim validate                 # physics checks
 python -m eggsim figures && python -m eggsim render
+python -m eggsim web-export               # browser assets + parity references -> web/
+cd web && npm install && npm test         # browser port vs Python
 pytest -q
 ```
 
@@ -235,6 +269,11 @@ eggsim/
   validate.py     physics checks
   figures.py      every figure, one visual system
   render.py       video, gif, hero still
+  web_export.py   scene, policies and parity references for the browser
+web/
+  sim/            env.py and the policy runner, ported to JavaScript
+  app/            three.js view, force chart, controls
+  test/           parity test against recorded Python episodes
 docs/physics.md   modelling notes
 ```
 

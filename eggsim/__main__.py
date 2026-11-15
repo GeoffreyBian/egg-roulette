@@ -8,6 +8,7 @@
   validate     physics checks: friction cone, solver, timestep, sensors -> results/physics.json
   figures      every figure in figures/
   render       hero stills, side-by-side video and README gif           -> media/
+  web-export   scene, policies and parity references for the browser demo -> web/assets, web/test
   all          everything above, in order
 """
 import sys
@@ -27,6 +28,8 @@ def main():
         from .figures import main as f; f(sys.argv[2:] or None)
     elif cmd == "render":
         from .render import main as f; f(sys.argv[2:] or None)
+    elif cmd == "web-export":
+        from .web_export import main as f; f(sys.argv[2:] or None)
     elif cmd == "all":
         for c in ("human-grip", "collect", "gain", "ablations", "robustness", "validate", "figures", "render"):
             sys.argv = [sys.argv[0], c]; main()
