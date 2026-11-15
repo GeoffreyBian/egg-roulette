@@ -8,6 +8,7 @@
   validate     physics checks: friction cone, solver, timestep, sensors -> results/physics.json
   figures      every figure in figures/
   render       hero stills, side-by-side video and README gif           -> media/
+  pixels       pixel policies: render demos, gain sweep (add mps to train on the GPU) -> results/gain_pixels.json
   web-export   scene, policies and parity references for the browser demo -> web/assets, web/test
   all          everything above, in order
 """
@@ -28,6 +29,15 @@ def main():
         from .figures import main as f; f(sys.argv[2:] or None)
     elif cmd == "render":
         from .render import main as f; f(sys.argv[2:] or None)
+    elif cmd == "pixels":
+        from . import pixels
+        sub = sys.argv[2] if len(sys.argv) > 2 else "gain"
+        if sub == "render":
+            pixels.render()
+        elif sub == "mps":
+            pixels.mps_trainer()
+        else:
+            pixels.gain(workers=int(sys.argv[3]) if len(sys.argv) > 3 else None)
     elif cmd == "web-export":
         from .web_export import main as f; f(sys.argv[2:] or None)
     elif cmd == "all":

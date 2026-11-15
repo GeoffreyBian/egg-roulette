@@ -2,13 +2,12 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 import loadMujoco from '@mujoco/mujoco';
-import { DROP_SPOTS, EggEnv, HOME, KINDS, PICK_ORDER, Rng, SUBSTEPS, CTRL_HZ } from '../sim/env.js';
-import { Policy, Runner } from '../sim/policy.js';
+import { PICK_ORDER, Rng, CTRL_HZ } from '../sim/env.js';
+import { Cameras } from '../sim/camera.js';
 import { ForceChart } from './chart.js';
-import { SceneView, eggContacts, makeTextures } from './view.js';
+import { SceneView, makeTextures } from './view.js';
 
 const $ = (id) => document.getElementById(id);
-const MAX_STEPS = 330;               // policy.MAX_STEPS: 11 s per egg
 const COND = {
   A: { name: 'Robot demos only', blurb: 'Teleoperated robot demos. Operators squeeze by eye.' },
   B: { name: '+ human video', blurb: 'Plus 150 human demos seen on video: motion, no force.' },
@@ -27,9 +26,9 @@ const CARTON_NOTE = {
 
 // ---------------------------------------------------------------- settings (mirrored in the URL hash)
 const S = {
-  cond: 'C', n: 25, variant: '', compare: true, cmp: 'A', carton: 'mystery', mass: 120, crack: 3.0, hard: false,
+  input: 'pixels', cond: 'C', n: 25, variant: '', compare: true, cmp: 'A', carton: 'mystery', mass: 120, crack: 3.0, hard: false,
   reveal: false, mu: 0.8, noise: 3, src: 'pads', seed: 1, speed: 1,
-  contacts: true, sensors: false, collision: false,
+  contacts: true, sensors: false, collision: false, saliency: true,
 };
 function readHash() {
   const h = new URLSearchParams(location.hash.slice(1));
@@ -39,15 +38,14 @@ function readHash() {
   }
 }
 function writeHash() {
-  const keys = ['cond', 'n', 'variant', 'compare', 'cmp', 'carton', 'mass', 'crack', 'hard', 'mu', 'noise', 'src', 'seed'];
+  const keys = ['input', 'cond', 'n', 'variant', 'compare', 'cmp', 'carton', 'mass', 'crack', 'hard', 'mu', 'noise', 'src', 'seed'];
   const h = new URLSearchParams();
   for (const k of keys) h.set(k, typeof S[k] === 'boolean' ? (S[k] ? '1' : '0') : S[k]);
   history.replaceState(null, '', `#${h}`);
 }
 
 // ---------------------------------------------------------------- loading
-let mj, index, tex;
-const policies = new Map();
+let mj, index, tex, camSpec;
 const models = [];
 
 function progress(msg, frac) { $('ld-msg').textContent = msg; $('ld-bar').style.width = `${Math.round(100 * frac)}%`; }
@@ -72,6 +70,7 @@ async function boot() {
   // one model per side: each run edits model fields (egg masses and sizes, crack debris contacts)
   models.push(mj.MjModel.from_xml_path('/w/scene.xml'), mj.MjModel.from_xml_path('/w/scene.xml'));
   index = await (await fetch('assets/policies/index.json')).json();
+  camSpec = await (await fetch('assets/camera.json')).json();
   tex = makeTextures({ wood: 'assets/wood.jpg', pulp: 'assets/pulp.jpg' });
   progress('Loading the policies…', 0.9);
   initThree();
@@ -81,144 +80,126 @@ async function boot() {
   requestAnimationFrame(frame);
 }
 
-async function getPolicy(name) {
-  if (!policies.has(name)) {
-    const meta = index.find((p) => p.name === name);
-    policies.set(name, await Policy.load(meta, `assets/policies/${name}.bin`));
-  }
-  return policies.get(name);
-}
+const policyName = (cond, n, variant, input = S.input) => (input === 'pixels' ? `px_${cond}_n${n}`
+  : variant && cond === 'C' && n === 25 ? `var_${variant}` : `${cond}_n${n}`);
 
-const policyName = (cond, n, variant) => (variant && cond === 'C' && n === 25 ? `var_${variant}` : `${cond}_n${n}`);
-
-// ---------------------------------------------------------------- a carton run for one policy
+// ---------------------------------------------------------------- one side of the view
+// The simulation runs in a Web Worker (app/worker.js -> sim/run.js). This side keeps what it sends back: a record
+// per control step (state, squeeze, contacts, camera images) to draw, chart and scrub through.
 class Session {
   constructor(side, model) {
     this.side = side;
-    this.env = new EggEnv(mj, model, {});
+    this.m = model;
     this.view = new SceneView(model, tex);
     this.view.scene.environment = envMap;
     this.replay = new mj.MjData(model);
-    this.vel = new mj.DoubleBuffer(6);
-    this.eggBodies = new Set(this.env.eggBody.concat(this.env.debris.flat()));
-  }
-
-  start(policy, label, color, kinds, seed) {
-    const env = this.env;
-    this.policy = policy; this.label = label; this.color = color;
-    env.rng = new Rng(seed);
-    env.visionNoise = S.noise / 1000;
-    env.setFriction(S.mu);
-    env.reset(kinds);
-    env.sub = undefined;                          // no control step in flight
-    this.runner = new Runner(policy, { touchSource: policy.meta.touch ? S.src : 'pads' });
-    this.kinds = kinds;
-    this.frames = [];
-    this.outcomes = [];
-    this.i = 0;
-    this.phase = 'policy';
-    this.startEgg();
-    this.record(null);
-  }
-
-  startEgg() {
-    const k = PICK_ORDER[this.i];
-    this.env.setTarget(k, DROP_SPOTS[this.i]);
-    this.runner.reset();
-    this.obs = this.env.obs();
-    this.steps = 0; this.basket = 0; this.scripted = 0;
-  }
-
-  get done() { return this.phase === 'done'; }
-
-  // one physics step (2 ms); control decisions happen every SUBSTEPS physics steps (30 Hz)
-  tick() {
-    if (this.done) return null;
-    const env = this.env;
-    if (env.sub === undefined || env.sub >= SUBSTEPS) {
-      let a;
-      if (this.phase === 'policy') a = this.action = this.runner.act(this.obs);
-      else if (this.phase === 'retreat') a = [0, 0, 0.6, -1];
-      else {
-        const ee = env.ee();
-        a = [...HOME.map((h, j) => Math.max(-1, Math.min(1, (h - ee[j]) / 0.0073))), -1];
-      }
-      env.beginStep(a);
-    }
-    this.perturb();
-    env.substep();
-    if (env.sub < SUBSTEPS) return null;
-    const info = env.endStep();
-    return this.post(info);
-  }
-
-  post(info) {
-    const env = this.env;
-    let event = null;
-    if (this.phase === 'policy') {
-      this.steps++;
-      this.obs = env.obs();
-      const st = env.eggStatus();
-      let out = null;
-      if (st === 'cracked' || st === 'dropped') out = st;
-      else if (st === 'basket' && this.action[3] < 0 && ++this.basket > 8) out = 'success';
-      else if (this.steps >= MAX_STEPS) out = 'timeout';
-      const e = env.eggs[env.target];
-      if (out) {
-        this.outcomes.push({ kind: e.kind, out, peak: e.peak, t: this.steps / CTRL_HZ });
-        this.phase = 'retreat';
-        event = out;
-      }
-    } else if (this.phase === 'retreat' && ++this.scripted >= 22) {
-      this.phase = 'home'; this.scripted = 0;
-    } else if (this.phase === 'home' && ++this.scripted >= 36) {
-      env.resetArm();
-      if (++this.i < 6) { this.phase = 'policy'; this.startEgg(); } else this.phase = 'done';
-    }
-    this.record(info);
-    return event;
-  }
-
-  record(info) {
-    const env = this.env;
-    this.frames.push({
-      qpos: Float64Array.from(env.d.qpos),
-      egg: Math.min(this.i, 5), phase: this.phase, steps: this.steps,
-      grip: info ? info.grip : 0,
-      pads: env.nativeTouch(),
-      contacts: S.contacts ? eggContacts(env, this.eggBodies) : [],
-      outcomes: this.outcomes.length,
+    this.cams = new Cameras(mj, model, camSpec);
+    this.pip = makePip(side);
+    this.gripper = mj.mj_name2id(model, mj.mjtObj.mjOBJ_BODY.value, 'gripper');
+    this.worker = new Worker(new URL('./worker.js', import.meta.url), { type: 'module' });
+    this.ready = new Promise((resolve, reject) => {
+      this.worker.onmessage = (e) => (e.data.type === 'ready' ? resolve() : reject(new Error(e.data.message)));
     });
+    this.worker.postMessage({ type: 'init', base: new URL('.', location.href).href });
+    this.frames = []; this.outcomes = []; this.pose = null; this.runId = 0; this.inflight = false;
+    this.pending = 0; this.isDone = true;
   }
 
-  // the mouse spring: pulls the grabbed body toward the cursor at the physics rate
-  perturb() {
-    const d = this.env.d;
-    if (!grab || grab.session !== this) return;
-    const b = grab.body, m = this.env.m, mass = m.body_mass[b];
-    const p = d.xpos.subarray(3 * b, 3 * b + 3);
-    mj.mj_objectVelocity(m, d, mj.mjtObj.mjOBJ_BODY.value, b, this.vel, 0);
-    const v = this.vel.GetView();
-    const k = mass * 900, c = 2 * mass * 30;       // ~30 rad/s spring, critically damped
-    for (let j = 0; j < 3; j++) d.xfrc_applied[6 * b + j] = k * (grab.target[j] - p[j]) - c * v[3 + j] + (j === 2 ? mass * 9.81 : 0);
+  async start(policyName, label, color, kinds, seed) {
+    await this.ready;
+    const id = ++this.runId;
+    this.label = label; this.color = color; this.kinds = kinds;
+    this.frames = []; this.outcomes = []; this.pose = null; this.isDone = false; this.pending = 0; this.simulated = 0;
+    this.inflight = false;           // the old run's reply is dropped below; the worker answers 'start' before any new 'run'
+    this._pipShown = null; this._pipFrame = null; this.lastView = null;
+    this.worker.onmessage = (e) => this.onMessage(e.data);
+    const opts = { noise: S.noise, mu: S.mu, src: S.src, saliency: S.saliency, contacts: S.contacts };
+    this.worker.postMessage({ type: 'start', id, policy: policyName, kinds, seed, opts });
+    await new Promise((resolve) => { this._started = resolve; });
   }
 
-  release(b) { for (let j = 0; j < 6; j++) this.env.d.xfrc_applied[6 * b + j] = 0; }
+  onMessage(msg) {
+    if (msg.type === 'error') { console.error('worker:', msg.message); return; }
+    if (msg.id !== this.runId) return;                 // a reply for a run that was replaced
+    if (msg.type === 'started') {
+      this.pixels = msg.pixels;
+      this.add(msg.rec);
+      this._started();
+      return;
+    }
+    if (msg.type === 'ran') {
+      this.inflight = false;
+      this.simulated += msg.n;
+      for (const r of msg.recs) {
+        this.add(r);
+        if (r.event) { this.outcomes.push(r.event); toast(this, r.event.out); renderScores(); }
+      }
+      this.pose = msg.pose;
+      if (msg.done) { this.isDone = true; renderScores(); }
+    }
+  }
 
-  // pose the view from the live state, or from a recorded frame
+  add(r) {
+    if (r.view) this.lastView = r.view;
+    r.sal = r.view && r.view.maps ? r.view.maps : null;
+    delete r.view;
+    this.frames.push(r);
+  }
+
+  get done() { return this.isDone; }
+
+  // ask the worker for the physics steps owed (at most ~0.3 s of sim per request)
+  pump(steps) {
+    if (this.done) return;
+    this.pending = Math.min(this.pending + steps, 150);
+    if (this.inflight || this.pending < 1) return;
+    const n = Math.floor(this.pending);
+    this.pending -= n;
+    this.inflight = true;
+    this.worker.postMessage({ type: 'run', id: this.runId, n });
+  }
+
+  grabAt(body, target) { this.worker.postMessage({ type: 'grab', body, target }); }
+  release() { this.worker.postMessage({ type: 'release' }); }
+
+  // pose the view from the newest state, or from a recorded frame while scrubbing
   show(f = null) {
-    const m = this.env.m;
-    let d = this.env.d, pads = this.env.nativeTouch(), contacts = null;
-    if (f !== null) {
+    const fr = this.frames[f === null ? this.frames.length - 1 : Math.min(f, this.frames.length - 1)];
+    if (!fr) return;
+    this.replay.qpos.set(f === null && this.pose ? this.pose : fr.qpos);
+    mj.mj_kinematics(this.m, this.replay);
+    this.view.update(this.replay, { sensors: S.sensors, padForces: fr.pads });
+    this.showPip(f);
+    this.view.setContacts(S.contacts ? fr.contacts : []);
+    const gb = grab && grab.session === this && f === null ? grab : null;
+    this.view.setSpring(gb ? Array.from(this.replay.xpos.subarray(3 * gb.body, 3 * gb.body + 3)) : null, gb ? gb.target : null);
+  }
+
+  ee() {
+    const d = this.replay, b = this.gripper, R = d.xmat.subarray(9 * b), p = d.xpos.subarray(3 * b);
+    const L = [0.0117, -0.0002, -0.0830];               // env.js PINCH_LOCAL
+    return [0, 1, 2].map((i) => p[i] + R[3 * i] * L[0] + R[3 * i + 1] * L[1] + R[3 * i + 2] * L[2]);
+  }
+
+  // the policy's two camera images, with where it looks
+  showPip(f) {
+    const el = this.pip;
+    el.hidden = !this.pixels || this.side >= active().length;
+    if (el.hidden) return;
+    let v;
+    if (f === null) v = this.lastView;
+    else {
+      // scrubbing: re-render the cameras from the recorded state; saliency is kept per step
+      if (this._pipFrame === f) return;
+      this._pipFrame = f;
       const fr = this.frames[Math.min(f, this.frames.length - 1)];
       this.replay.qpos.set(fr.qpos);
-      mj.mj_kinematics(m, this.replay);
-      d = this.replay; pads = fr.pads; contacts = fr.contacts;
-    } else if (S.contacts) contacts = eggContacts(this.env, this.eggBodies);
-    this.view.update(d, { sensors: S.sensors, padForces: pads });
-    this.view.setContacts(S.contacts ? contacts : []);
-    const gb = grab && grab.session === this && f === null ? grab : null;
-    this.view.setSpring(gb ? Array.from(d.xpos.subarray(3 * gb.body, 3 * gb.body + 3)) : null, gb ? gb.target : null);
+      v = { frames: this.cams.render(this.replay), maps: fr.sal };
+      mj.mj_kinematics(this.m, this.replay);
+    }
+    if (!v || v === this._pipShown) return;
+    this._pipShown = v;
+    drawPip(el, v);
   }
 
   // squeeze trace of the egg showing at frame f
@@ -229,6 +210,49 @@ class Session {
     for (let j = s; j <= end; j++) if (F[j].phase === 'policy' || (j > s && F[j - 1].phase === 'policy')) { t.push(F[j].steps / CTRL_HZ); g.push(F[j].grip); }
     return { t, f: g };
   }
+}
+
+// ---------------------------------------------------------------- picture-in-picture: what the pixel policy sees
+// The overlay is gradient saliency: how much each pixel moves the policy's next action (sim/policy.js saliency()).
+function makePip(side) {
+  const el = document.createElement('div');
+  el.className = 'pip'; el.hidden = true;
+  el.innerHTML = ['Workspace camera', 'Wrist camera'].map((t) =>
+    `<figure><canvas width="128" height="128"></canvas><figcaption>${t}</figcaption></figure>`).join('');
+  el.dataset.side = side;
+  return el;
+}
+
+const heatCanvas = Object.assign(document.createElement('canvas'), { width: 64, height: 64 });
+function drawPip(el, v) {
+  el.querySelectorAll('canvas').forEach((cv, c) => {
+    const g = cv.getContext('2d'), R = camSpec.res, im = g.createImageData(R, R), src = v.frames[c];
+    for (let i = 0; i < R * R; i++) { im.data[4 * i] = src[3 * i]; im.data[4 * i + 1] = src[3 * i + 1]; im.data[4 * i + 2] = src[3 * i + 2]; im.data[4 * i + 3] = 255; }
+    const tmp = drawPip.tmp || (drawPip.tmp = Object.assign(document.createElement('canvas'), { width: R, height: R }));
+    tmp.getContext('2d').putImageData(im, 0, 0);
+    g.imageSmoothingEnabled = false;
+    g.drawImage(tmp, 0, 0, cv.width, cv.height);
+    if (!S.saliency || !v.maps) return;
+    // 3x3 box blur for display, then scale to the 99th percentile so one hot pixel doesn't wash out the rest
+    const m = v.maps[c], b = new Float32Array(R * R);
+    for (let y = 0; y < R; y++) for (let x = 0; x < R; x++) {
+      let t = 0, n = 0;
+      for (let dy = -1; dy <= 1; dy++) for (let dx = -1; dx <= 1; dx++) {
+        const yy = y + dy, xx = x + dx;
+        if (yy >= 0 && yy < R && xx >= 0 && xx < R) { t += m[yy * R + xx]; n++; }
+      }
+      b[y * R + x] = t / n;
+    }
+    const top = Float32Array.from(b).sort()[Math.floor(0.99 * (R * R - 1))] || 1;
+    const hc = heatCanvas.getContext('2d'), h = hc.createImageData(R, R);
+    for (let i = 0; i < R * R; i++) {
+      const a = Math.min(1, b[i] / top);
+      h.data[4 * i] = 255; h.data[4 * i + 1] = Math.round(40 + 190 * a); h.data[4 * i + 2] = 20; h.data[4 * i + 3] = Math.round(230 * a * a);
+    }
+    hc.putImageData(h, 0, 0);
+    g.imageSmoothingEnabled = true;
+    g.drawImage(heatCanvas, 0, 0, cv.width, cv.height);
+  });
 }
 
 // ---------------------------------------------------------------- three.js
@@ -261,6 +285,7 @@ function initThree() {
   controls.maxPolarAngle = Math.PI * 0.495;
   setCam('hero', true);
   for (const model of models) sessions.push(new Session(sessions.length, model));
+  for (const s of sessions) $('pips').appendChild(s.pip);
   for (const s of sessions) s.view.scene.environmentIntensity = 0.35;
   canvas.addEventListener('pointerdown', onDown);
   canvas.addEventListener('pointermove', onMove);
@@ -315,6 +340,7 @@ function onDown(e) {
   if (!hit) return;
   const normal = camera.getWorldDirection(new THREE.Vector3()).negate();
   grab = { session: s, body: hit.object.userData.body, plane: new THREE.Plane().setFromNormalAndCoplanarPoint(normal, hit.point), target: toMj(hit.point), side: i };
+  s.grabAt(grab.body, grab.target);
   controls.enabled = false;
   $('gl').setPointerCapture(e.pointerId);
   if (!running) setRunning(true);
@@ -326,11 +352,12 @@ function onMove(e) {
     const t = toMj(p);
     t[2] = Math.max(t[2], 0.0);
     grab.target = t;
+    grab.session.grabAt(grab.body, t);
   }
 }
 function onUp() {
   if (!grab) return;
-  grab.session.release(grab.body);
+  grab.session.release();
   grab = null;
   controls.enabled = true;
 }
@@ -362,19 +389,17 @@ let runId = 0;
 async function restart() {
   const id = ++runId;
   writeHash();
-  const main = policyName(S.cond, S.n, S.variant);
-  const pols = [await getPolicy(main)];
-  if (S.compare) pols.push(await getPolicy(policyName(S.cmp, S.n, '')));
-  if (id !== runId) return;
+  const names = [policyName(S.cond, S.n, S.variant)];
+  if (S.compare) names.push(policyName(S.cmp, S.n, ''));
   const kinds = cartonKinds(new Rng(S.seed * 7919 + 13));
   const labels = [policyLabel(S.cond, S.variant), policyLabel(S.cmp, '')];
   const colors = [css(`--c-${S.cond}`), css(`--c-${S.cmp}`)];
   if (grab) onUp();
-  sessions.forEach((s, i) => {
-    if (i < pols.length) s.start(pols[i], `${labels[i]} · ${S.n} robot demos`, colors[i], kinds, S.seed);
-  });
+  await Promise.all(names.map((nm, i) => sessions[i].start(nm, `${labels[i]} · ${S.n} robot demos`, colors[i], kinds, S.seed)));
+  if (id !== runId) return;
   for (const s of sessions) s.view.showCollision(S.collision);
   $('scrub').value = 0;
+  simWin = [];
   setRunning(true);
   updateLabels(true);
   renderScores();
@@ -388,25 +413,31 @@ const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v
 
 const active = () => sessions.slice(0, S.compare ? 2 : 1);
 
+// real-time factor actually achieved, shown when the simulation can't keep up with the requested speed
+let simWin = [];
+function trackSpeed(dt) {
+  const act = active(), sim = Math.min(...act.map((s) => s.simulated || 0)) / 500;
+  simWin.push([performance.now(), sim]);
+  while (simWin.length > 2 && performance.now() - simWin[0][0] > 2000) simWin.shift();
+  const [t0, s0] = simWin[0], [t1, s1] = simWin[simWin.length - 1];
+  const rate = t1 - t0 > 500 ? (s1 - s0) / ((t1 - t0) / 1000) : null;
+  const el = $('rate');
+  el.hidden = !(rate !== null && rate < 0.85 * S.speed && !act.every((s) => s.done));
+  if (!el.hidden) el.textContent = `running at ${rate.toFixed(2)}× (your CPU is the limit)`;
+}
+
 function frame(now) {
+  requestAnimationFrame(frame);                  // first, so one bad frame can't stop the loop
   const dt = Math.min((now - last) / 1000, 0.1);
   last = now;
   if (running && !scrubbing()) {
-    budget += dt * 500 * S.speed;
-    const n = Math.min(Math.floor(budget), 200);
-    budget -= n;
-    for (let k = 0; k < n; k++) {
-      for (const s of active()) {
-        const ev = s.tick();
-        if (ev) { toast(s, ev); renderScores(); }
-      }
-    }
+    for (const s of active()) s.pump(dt * 500 * S.speed);
+    trackSpeed(dt);
     if (active().every((s) => s.done)) { setRunning(false); renderScores(); }
     const len = Math.max(...active().map((s) => s.frames.length)) - 1;
     $('scrub').max = len; $('scrub').value = len;
   }
   draw();
-  requestAnimationFrame(frame);
 }
 
 function draw() {
@@ -416,7 +447,7 @@ function draw() {
   const act = active();
   // camera: tween to presets, or follow the pinch point
   if (camMode === 'follow') {
-    const ee = act[0].env.ee();
+    const ee = act[0].ee();
     const tgt = new THREE.Vector3(ee[0], ee[2] - 0.01, -ee[1]);
     const off = camera.position.clone().sub(controls.target);
     if (off.length() > 0.3) off.setLength(0.24);
@@ -445,7 +476,8 @@ function draw() {
     renderer.setScissor(r.x, H - r.y - r.h, r.w, r.h);
     renderer.render(s.view.scene, camera);
   });
-  // labels and the chart
+  // labels and the chart; a session that is restarting has no records yet
+  if (act.some((s) => !s.frames.length)) return;
   updateLabels(false, rects, vertical);
   const fr = f ?? Math.max(...act.map((s) => s.frames.length - 1));
   chart.series = act.map((s) => ({ label: s.label.split(' · ')[0], color: s.color, ...s.trace(Math.min(fr, s.frames.length - 1)) }));
@@ -458,7 +490,7 @@ function draw() {
 
 // ---------------------------------------------------------------- overlays
 let labelEls = [];
-function updateLabels(rebuild, rects = layout().rects) {
+function updateLabels(rebuild, rects = layout().rects, vertical = layout().vertical) {
   const host = $('labels'), act = active();
   if (rebuild || labelEls.length !== act.length) {
     host.innerHTML = '';
@@ -472,11 +504,15 @@ function updateLabels(rebuild, rects = layout().rects) {
     });
     if (act.length === 2) { const dv = document.createElement('div'); dv.className = 'divider'; host.appendChild(dv); }
   }
+  sessions.forEach((s, i) => { if (i >= act.length) s.pip.hidden = true; });
   act.forEach((s, i) => {
     const r = rects[i], el = labelEls[i];
     el.style.left = `${r.x + 12}px`; el.style.top = `${r.y + 12}px`;
+    const ph = s.pip.offsetHeight || 0;
+    s.pip.style.left = `${r.x + 12}px`;
+    s.pip.style.top = `${Math.max(r.y + 56, r.y + r.h - ph - (i === act.length - 1 || !vertical ? 52 : 12))}px`;
     const fr = scrubbing() ? s.frames[Math.min(viewFrame, s.frames.length - 1)] : s.frames[s.frames.length - 1];
-    const live = scrubbing() ? fr.grip : (s.env.live ? s.env.live.grip : 0);
+    const live = fr.grip;
     el.querySelector('.f').textContent = fr.phase === 'policy' ? `squeeze ${live.toFixed(2)} N` : fr.phase === 'done' ? 'carton done' : '';
   });
   const dv = host.querySelector('.divider');
@@ -530,8 +566,8 @@ function renderScores(f = null) {
 }
 
 // ---------------------------------------------------------------- panel
-function successOf(cond, n) {
-  const p = index.find((q) => q.name === `${cond}_n${n}`);
+function successOf(cond, n, input = S.input) {
+  const p = index.find((q) => q.name === policyName(cond, n, '', input));
   return p.success_seeds.reduce((a, b) => a + b, 0) / p.success_seeds.length;
 }
 
@@ -546,6 +582,11 @@ function buildPanel() {
     conds.appendChild(b);
   }
   document.querySelectorAll('#nrobot button').forEach((b) => { b.onclick = () => { S.n = +b.dataset.n; syncPanel(); restart(); }; });
+  document.querySelectorAll('#input button').forEach((b) => { b.onclick = () => { S.input = b.dataset.input; syncPanel(); restart(); }; });
+  $('v-saliency').onchange = (e) => {
+    S.saliency = e.target.checked;
+    for (const s of sessions) { s._pipShown = null; s.worker.postMessage({ type: 'opts', opts: { saliency: S.saliency } }); }
+  };
   const vs = $('variant');
   vs.innerHTML = '<option value="">Standard (the headline policy)</option>' +
     index.filter((p) => p.variant).map((p) => `<option value="${p.variant}">${p.label}</option>`).join('');
@@ -569,7 +610,7 @@ function buildPanel() {
   live('noise', 'noise', (v) => `${v.toFixed(1)} mm`);
   document.querySelectorAll('#touchsrc button').forEach((b) => { b.onclick = () => { S.src = b.dataset.src; syncPanel(); restart(); }; });
   // view toggles
-  $('v-contacts').onchange = (e) => { S.contacts = e.target.checked; };
+  $('v-contacts').onchange = (e) => { S.contacts = e.target.checked; for (const s of sessions) s.worker.postMessage({ type: 'opts', opts: { contacts: S.contacts } }); };
   $('v-sensors').onchange = (e) => { S.sensors = e.target.checked; };
   $('v-collision').onchange = (e) => { S.collision = e.target.checked; for (const s of sessions) s.view.showCollision(S.collision); };
   // transport
@@ -612,11 +653,16 @@ function syncPanel() {
     b.querySelector('.pct').textContent = `${Math.round(100 * successOf(b.dataset.cond, S.n))}%`;
   });
   document.querySelectorAll('#nrobot button').forEach((b) => b.classList.toggle('on', +b.dataset.n === S.n));
-  const vOk = S.cond === 'C' && S.n === 25;
+  document.querySelectorAll('#input button').forEach((b) => b.classList.toggle('on', b.dataset.input === S.input));
+  $('input-note').innerHTML = S.input === 'pixels'
+    ? 'Two 64&times;64 cameras (picture-in-picture, bottom left) plus the arm\'s own joint state and touch. It has to find the egg in the image.'
+    : 'The egg\'s position, measured to 3 mm, plus the arm\'s joint state and touch. The original study.';
+  $('v-saliency').disabled = S.input !== 'pixels';
+  const vOk = S.cond === 'C' && S.n === 25 && S.input === 'state';
   $('variant').disabled = !vOk;
   if (!vOk) S.variant = '';
   $('variant').value = S.variant;
-  $('variant').title = vOk ? '' : 'Recipe variants exist for the touch policy with 25 robot demos';
+  $('variant').title = vOk ? '' : 'Recipe variants exist for the touch policy with 25 robot demos, seeing egg position';
   $('compare').checked = S.compare;
   $('compare-cond').value = S.cmp;
   $('compare-cond').disabled = !S.compare;
@@ -641,7 +687,9 @@ function syncPanel() {
   $('test-note').innerHTML = notes.join(' ');
   $('test-note').hidden = !notes.length;
   const lo = Math.min(...meta.success_seeds), hi = Math.max(...meta.success_seeds);
-  $('gain-cap').innerHTML = `Python evaluation, 5 seeds × 60 eggs each. Loaded: seed ${meta.seed}, <b>${Math.round(100 * meta.success)}%</b>` +
+  const nSeeds = meta.success_seeds.length;
+  $('gain-cap').innerHTML = (S.input === 'pixels' ? 'Solid: sees camera pixels. Dashed: sees egg position. ' : '') +
+    `Python evaluation, ${nSeeds} seeds × 60 eggs each. Loaded: seed ${meta.seed}, <b>${Math.round(100 * meta.success)}%</b>` +
     ` (seeds span ${Math.round(100 * lo)}–${Math.round(100 * hi)}%).`;
   drawGain();
 }
@@ -653,6 +701,12 @@ function drawGain() {
   for (const p of [0, 0.5, 1]) s += `<line class="gl" x1="${L}" x2="${W - R}" y1="${y(p)}" y2="${y(p)}"/><text x="${L - 6}" y="${y(p) + 3}" text-anchor="end">${p * 100}%</text>`;
   for (const n of ns) s += `<text x="${x(n)}" y="${H - 6}" text-anchor="middle">${n}</text>`;
   s += `<text x="${W - R}" y="${H - 6}" text-anchor="end" dx="0" dy="-12" style="font-size:9px">robot demos</text>`;
+  if (S.input === 'pixels') {
+    for (const c of 'ABCD') {
+      const pts = ns.map((n) => [x(n), y(successOf(c, n, 'state'))]);
+      s += `<polyline points="${pts.map((p) => p.join(',')).join(' ')}" fill="none" stroke="var(--c-${c})" stroke-width="1.25" stroke-dasharray="3 3" opacity="0.45"/>`;
+    }
+  }
   for (const c of 'ABCD') {
     const on = c === S.cond;
     const pts = ns.map((n) => [x(n), y(successOf(c, n))]);

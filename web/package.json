@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node test/parity.mjs",
+    "test": "node test/parity.mjs && node test/parity_pixels.mjs",
     "serve": "python3 -m http.server 8123"
   },
   "devDependencies": {

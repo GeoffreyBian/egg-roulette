@@ -121,6 +121,7 @@ a { color: inherit; }
 .ghost { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 6px 10px; font-size: 13px; font-weight: 500; white-space: nowrap; }
 .ghost:hover { background: var(--raised); }
 #scrub { flex: 1; min-width: 60px; accent-color: var(--accent); }
+.rate { font-size: 11px; color: var(--warn); white-space: nowrap; }
 .time { font-variant-numeric: tabular-nums; color: var(--ink-3); font-size: 12px; width: 52px; text-align: right; flex: none; }
 
 .readout { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 12px; padding: 10px 12px 12px; background: var(--panel); border-top: 1px solid var(--line); height: 168px; }
@@ -191,6 +192,17 @@ select:disabled { opacity: 0.5; }
 .about p { font-size: 13px; color: var(--ink-2); margin: 0 0 8px; }
 .about p:last-child { margin-bottom: 0; }
 
+/* picture-in-picture: the pixel policy's cameras */
+.pips { position: absolute; inset: 0; pointer-events: none; }
+.pip { position: absolute; display: flex; gap: 6px; padding: 6px; border-radius: 10px; box-shadow: var(--shadow);
+  background: color-mix(in srgb, var(--panel) 88%, transparent); backdrop-filter: blur(6px); border: 1px solid var(--line); }
+.pip[hidden] { display: none; }
+.pip figure { margin: 0; }
+.pip canvas { width: 112px; height: 112px; display: block; border-radius: 6px; image-rendering: pixelated; background: #222; }
+.pip figcaption { font-size: 10.5px; color: var(--ink-3); text-align: center; margin-top: 3px; }
+.seg.wide { display: flex; }
+.seg.wide button { flex: 1; padding: 7px 10px; }
+
 /* ---------- small screens ---------- */
 @media (max-width: 980px) {
   body { height: auto; }
@@ -212,9 +224,13 @@ select:disabled { opacity: 0.5; }
   .panel section { padding: 14px 16px; }
   .slider { grid-template-columns: 96px 1fr 52px; }
   .readout { padding: 10px 12px; }
+  .pip canvas { width: 76px; height: 76px; }
+  .pip { padding: 4px; gap: 4px; }
 }
 @media (max-width: 560px) {
   .row.stack { flex-direction: column; align-items: stretch; }
   .row.stack .seg { display: flex; }
   .row.stack .seg button { flex: 1; }
+  .pip canvas { width: 64px; height: 64px; }       /* the cameras' native 64x64 */
+  .pip figcaption { font-size: 9.5px; }
 }

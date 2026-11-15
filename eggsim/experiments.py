@@ -100,7 +100,7 @@ def _robust_job(args):
 
 
 # ---------------------------------------------------------------- runner
-def _run(fn, jobs, path, key):
+def _run(fn, jobs, path, key, workers=None):
     """Runs jobs not already in results/<path>, saving after each one so a sweep can be resumed."""
     RESULTS.mkdir(exist_ok=True)
     POLICIES.mkdir(parents=True, exist_ok=True)
@@ -110,7 +110,7 @@ def _run(fn, jobs, path, key):
     todo = [j for j in jobs if tuple(j) not in have]
     print(f"{path}: {len(todo)} of {len(jobs)} jobs to run", flush=True)
     t0 = time.time()
-    with mp.Pool(mp.cpu_count()) as pool:
+    with mp.Pool(workers or mp.cpu_count()) as pool:
         for r in pool.imap_unordered(fn, todo):
             done.append(r)
             f.write_text(json.dumps(done, indent=1))

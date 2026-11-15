@@ -87,6 +87,7 @@
     <camera name="side" quat="0.86553 0.500857 0 0" pos="0.24 -0.55 0.3" fovy="48"/>
     <camera name="close" quat="0.488706 0.332568 0.453777 0.666822" pos="0.46 0.18 0.2"/>
     <camera name="hero" quat="0.789415 0.433528 0.209202 0.380937" pos="0.5 -0.36 0.3" fovy="42"/>
+    <camera name="workspace" quat="0.653281 0.270598 0.270598 0.653281" pos="0.5 -0.02 0.33" fovy="60"/>
     <light pos="0.35 0.25 1.1" dir="-0.240008 -0.144005 -0.960031" diffuse="0.62 0.6 0.56" specular="0.25 0.25 0.25"/>
     <light castshadow="false" pos="-0.5 -0.6 0.9" dir="0.430528 0.478365 -0.765384" diffuse="0.22 0.24 0.28"/>
     <body name="base" childclass="so101">

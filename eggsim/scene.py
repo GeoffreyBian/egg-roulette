@@ -187,6 +187,20 @@ def _table_carton_basket(spec):
     wb.add_camera(name="side", pos=[0.24, -0.55, 0.30], xyaxes=[1, 0, 0, 0, 0.5, 0.87], fovy=48)
     wb.add_camera(name="close", pos=[0.46, 0.18, 0.20], xyaxes=[-0.3, 0.95, 0, -0.35, -0.11, 0.93], fovy=45)
     wb.add_camera(name="hero", pos=[0.50, -0.36, 0.30], xyaxes=[0.62, 0.78, 0, -0.42, 0.33, 0.84], fovy=42)
+    # the pixel policies' fixed camera (eggsim/camera.py): carton, basket and gripper in one 64x64 view
+    wb.add_camera(name="workspace", pos=WORKSPACE_CAM, xyaxes=_look_at(WORKSPACE_CAM, WORKSPACE_TARGET), fovy=60)
+
+
+WORKSPACE_CAM = [0.50, -0.02, 0.33]
+WORKSPACE_TARGET = [0.19, -0.02, 0.02]
+
+
+def _look_at(pos, target):
+    f = np.asarray(target, float) - pos
+    f /= np.linalg.norm(f)
+    x = np.cross(f, [0, 0, 1.0])
+    x /= np.linalg.norm(x)
+    return list(x) + list(np.cross(x, f))
 
 
 def _eggs(spec, n_eggs):

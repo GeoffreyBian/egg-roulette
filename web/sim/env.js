@@ -281,6 +281,25 @@ export class EggEnv {
     return { grip: Math.min(normal[0], normal[1]), shear: Math.max(0, force[2]), slip };
   }
 
+  // every active contact on the given bodies (eggs and their debris), for drawing: {p, f (force on the body), jaw}
+  contacts(bodies) {
+    const mj = this.mj, m = this.m, d = this.d, out = [];
+    const con = d.contact;
+    for (let i = 0; i < d.ncon; i++) {
+      const c = con.get(i);
+      const on2 = bodies.has(m.geom_bodyid[c.geom2]), on1 = bodies.has(m.geom_bodyid[c.geom1]);
+      if (on1 || on2) {
+        mj.mj_contactForce(m, d, i, this.f6);
+        const f = this.f6.GetView(), fr = c.frame, sign = on2 ? 1 : -1;   // contact force acts on geom2
+        const w = [0, 1, 2].map((j) => sign * (f[0] * fr[j] + f[1] * fr[3 + j] + f[2] * fr[6 + j]));
+        out.push({ p: Array.from(c.pos), f: w, jaw: this.jawGeoms.has(on2 ? c.geom1 : c.geom2) });
+      }
+      c.delete();
+    }
+    con.delete();
+    return out;
+  }
+
   nativeTouch() { const s = this.d.sensordata; return [s[this.touchAdr[0]], s[this.touchAdr[1]]]; }
   servoTorque() { return this.d.sensordata[this.touchAdr[2]]; }
 

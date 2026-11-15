@@ -135,6 +135,67 @@ def gain():
     _save(fig, "gain_chart")
 
 
+# ---------------------------------------------------------------- 1b. pixels vs state
+PIXELS_TITLE = "From cameras, human touch still adds about 41 points (47 when the policy is given the egg position)"
+
+
+def gain_pixels(title=None):
+    """Left: success vs robot demos, policies that see camera pixels (solid) next to the state-based ones (dashed).
+    Right: what touch data adds, C minus A at each data size, with Newcombe 95% intervals, for both inputs."""
+    S, P = _load("gain.json"), _load("gain_pixels.json")
+    grid = sorted({r["n_robot"] for r in P})
+    fig, (ax, bx) = plt.subplots(1, 2, figsize=(11.6, 5.0), gridspec_kw=dict(width_ratios=[1.35, 1]))
+    fig.subplots_adjust(left=0.06, right=0.985, top=0.80, bottom=0.16, wspace=0.28)
+    for c in "ADBC":
+        for R, dashed in ((S, True), (P, False)):
+            m, lo, hi = [], [], []
+            for n in grid:
+                k, N = _pooled([r for r in R if r["cond"] == c and r["n_robot"] == n])
+                a, b = wilson(k, N)
+                m.append(100 * k / N); lo.append(100 * a); hi.append(100 * b)
+            if dashed:
+                ax.plot(grid, m, color=COND[c], lw=1.3, ls=(0, (3, 3)), alpha=0.6, zorder=2)
+            else:
+                ax.fill_between(grid, lo, hi, color=COND[c], alpha=0.10, lw=0)
+                ax.plot(grid, m, color=COND[c], lw=2.6 if c == "C" else 2, zorder=3, label=LABEL[c])
+                ax.scatter(grid, m, s=38, color=COND[c], edgecolor=SURFACE, linewidth=1.5, zorder=4)
+    ax.plot([], [], color=MUTED, lw=1.3, ls=(0, (3, 3)), label="same condition, sees egg position")
+    ax.legend(loc="lower right", fontsize=8.5, handlelength=2.2)
+    ax.set_xscale("log"); ax.set_xticks(grid, [str(n) for n in grid]); ax.minorticks_off()
+    ax.set_xlim(grid[0] * 0.85, grid[-1] * 1.15); ax.set_ylim(0, 100)
+    ax.set_yticks(range(0, 101, 20), [f"{v}%" for v in range(0, 101, 20)])
+    ax.set_xlabel("robot teleoperation demos in the training set")
+    ax.set_ylabel("eggs moved to the basket intact")
+    ax.set_title("Success, cameras (solid) vs egg position (dashed)", fontsize=10, color=INK2, fontweight="normal")
+    w = 0.16
+    for j, (R, lab, col, alpha) in enumerate(((S, "sees egg position", MUTED, 1.0), (P, "sees cameras", COND["C"], 1.0))):
+        xs, ds, los, his = [], [], [], []
+        for i, n in enumerate(grid):
+            kc, nc = _pooled([r for r in R if r["cond"] == "C" and r["n_robot"] == n])
+            ka, na = _pooled([r for r in R if r["cond"] == "A" and r["n_robot"] == n])
+            lo, hi = newcombe(kc, nc, ka, na)
+            xs.append(i + (j - 0.5) * 2 * w); ds.append(100 * (kc / nc - ka / na)); los.append(100 * lo); his.append(100 * hi)
+        bx.bar(xs, ds, width=2 * w * 0.9, color=col, alpha=alpha, label=lab, zorder=3)
+        bx.errorbar(xs, ds, yerr=[[d - l for d, l in zip(ds, los)], [h - d for d, h in zip(ds, his)]], fmt="none",
+                    ecolor=INK2, elinewidth=1, capsize=2.5, zorder=4)
+        for x, d, l, h in zip(xs, ds, los, his):
+            bx.text(x, h + 1 if d >= 0 else l - 1, f"{d:+.0f}", ha="center", va="bottom" if d >= 0 else "top",
+                    fontsize=8, color=INK)
+    bx.axhline(0, color=AXIS, lw=0.8)
+    bx.set_xticks(range(len(grid)), [str(n) for n in grid])
+    bx.set_xlabel("robot teleoperation demos in the training set")
+    bx.set_ylabel("touch lift: C minus A, percentage points")
+    bx.set_title("What human touch data adds", fontsize=10, color=INK2, fontweight="normal")
+    bx.legend(loc="upper right", fontsize=8.5)
+    bx.grid(axis="x", visible=False)
+    ns, nsp = len({r["seed"] for r in S}), len({r["seed"] for r in P})
+    _title(fig, title or PIXELS_TITLE,
+           f"Two 64x64 ray-cast cameras (workspace + wrist) instead of the egg's position. Pixels: {nsp} seeds x 60 eggs; "
+           f"position: {ns} seeds x 60 eggs. Bands and bars: 95% Wilson / Newcombe intervals.")
+    _note(fig, "Human demos are rendered with the robot's gripper in place of the hand (perfect visual retargeting).")
+    _save(fig, "gain_pixels")
+
+
 # ---------------------------------------------------------------- 2. failure modes
 def failures(n_robot=25):
     R = [r for r in _load("gain.json") if r["n_robot"] == n_robot]
@@ -471,7 +532,7 @@ def human_grip():
     _save(fig, "human_grip")
 
 
-ALL = dict(gain=gain, failures=failures, anatomy=anatomy, ablations=ablations, generalization=generalization,
+ALL = dict(gain=gain, gain_pixels=gain_pixels, failures=failures, anatomy=anatomy, ablations=ablations, generalization=generalization,
            robustness=robustness, physics=physics, human_grip=human_grip)
 
 

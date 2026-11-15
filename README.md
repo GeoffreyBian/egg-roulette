@@ -26,13 +26,15 @@ a number.
 
 **[Run it in your browser →](https://geoffreybian.github.io/egg-roulette/)** The same MuJoCo model, compiled
 to WebAssembly, with the trained policies running live. Pick the training data, swap the eggs, change the pad
-friction or unplug the touch sensor, and push eggs around with the mouse.
+friction or unplug the touch sensor, and push eggs around with the mouse. By default the policies see two
+camera images, shown in the corner, with a heat map of the pixels that move their next action.
 
 ## Contents
 
 - [What's simulated](#whats-simulated)
 - [Physics checks](#physics-checks)
 - [Results](#results)
+- [From cameras](#from-cameras)
 - [In the browser](#in-the-browser)
 - [Limitations](#limitations)
 - [Reproduce](#reproduce)
@@ -197,6 +199,54 @@ Each row changes one thing about the 93% touch policy and retrains 5 seeds.
   data, and marking them doesn't help.
 - **Robot-only policies stay stuck** at 49% with egg-kind labels (54%) or 6 steps of memory (49%).
 
+## From cameras
+
+The policies above are given the egg's position. Here they get two 64x64 camera images instead (a fixed
+workspace camera and the SO-101's wrist camera), plus the arm's joint state and, where the condition has one,
+touch. They have to find the egg in the image. Same data, same conditions, same 60 test eggs per seed,
+3 seeds.
+
+![Gain chart from cameras](figures/gain_pixels.png)
+
+**Touch still adds most of its lift.** Pooled over all data sizes, human touch demos (C) beat robot demos only
+(A) by 41 points from cameras and 47 points from egg position.
+
+| robot demos | from cameras: C / A | lift from cameras | lift from egg position |
+|---|---|---|---|
+| 10 | 87% / 36% | +51 [42, 59] | +56 [50, 62] |
+| 25 | 81% / 44% | +37 [27, 45] | +44 [37, 50] |
+| 50 | 86% / 46% | +39 [30, 48] | +45 [38, 51] |
+| 100 | 88% / 51% | +38 [29, 46] | +44 [37, 50] |
+
+Brackets are 95% Newcombe intervals over pooled eggs.
+
+- The lift is about 6 points smaller from cameras at every data size. Resampling seeds as well as eggs, the
+  6-point drop has a 95% interval of [-3, 15]. Three seeds can't say whether cameras really cost touch
+  anything.
+- The drop is all on the touch side. Without touch, cameras change nothing: A goes from 43% to 44%, B from
+  40% to 41%. With touch, C goes from 90% to 85% and D from 53% to 48%.
+- Where C loses: it cracks 12.5% of raw eggs from cameras against 6.2% from egg position, and stalls on 10.6%
+  of stones against 6.0%. Not tested: whether this comes from approach error that the squeeze has to
+  absorb, or from the image features competing with touch for the policy's attention.
+
+**How it's built.**
+
+- **Cameras** (`camera.py`): one ray per pixel through `mj_multiRay` against the collision geometry, a flat
+  colour per object and one directional light. Ray casting rather than OpenGL, so Python and the browser can
+  produce the same image without a GPU. Each camera ignores its own body, or the wrist camera sees only its
+  own lens housing.
+- **Policy** (`pixels.py`): per camera, three convolutions (5x5 stride 2, 3x3 stride 2, 3x3) and a spatial
+  softmax that turns 32 feature maps into 32 image keypoints. The keypoints, joint state and touch go into the
+  same MLP and 8-step action chunks as the state policies. Random shifts of up to 4 pixels during training.
+  8,000 steps at batch 128, about 3 minutes per policy on an M4's GPU (MPS, float16 autocast).
+- **Human demos** are rendered with the robot's gripper in place of the hand. That is perfect visual
+  retargeting, which a real glove dataset would not have. It favours B and C.
+
+**A bug worth knowing about.** `mj_multiRay` culls with the geoms' bounding boxes, which `mj_kinematics`
+does not update. Rendering a pose after only `mj_kinematics` gave images that were mostly wrong for a fresh
+`MjData` and subtly wrong after a reset, and the first JS port disagreed with Python on 42% of pixels. Both
+renderers now call `mj_fwdPosition` first. Every frame was re-rendered and the pilot policy thrown away.
+
 ## In the browser
 
 [geoffreybian.github.io/egg-roulette](https://geoffreybian.github.io/egg-roulette/) runs the study live: MuJoCo
@@ -220,6 +270,20 @@ trained weights. Nothing is pre-recorded. `web/` holds the app; `python -m eggsi
   demos, glove 300 ms late, pressure only, servo-current estimate, varied eggs), each reproducing its ablation
   score exactly. Test-time knobs: pad friction, camera noise, touch source (pads, servo estimate, unplugged),
   never-seen eggs and a custom egg. Training stays offline.
+- **Cameras.** "What the robot sees" switches between the camera policies (default) and the egg-position
+  ones. Each camera policy runs the whole loop in the browser: physics, then `web/sim/camera.js` renders both
+  cameras by ray casting, then the CNN in `web/sim/policy.js` picks the action. The corner inset shows the two
+  images the policy got, with a heat map of gradient saliency: the size of the gradient of the next action's
+  four outputs with respect to each pixel, from hand-written backpropagation. It refreshes twice a second.
+  Each side runs in its own Web Worker, so the page stays responsive.
+- **Camera parity.** `test/parity_pixels.mjs` re-renders 320 recorded states: 851 of 7.9 million colour
+  values differ, 815 pixels by 1/255 (rounding) and 6 by more, 5 of them on object edges. Fed Python's images,
+  the JS CNN's actions match to 2e-7 and its saliency matches PyTorch's autograd to 2e-6 of the peak. Closed
+  loop on 60 fresh eggs, the browser gets 82% for the touch camera policy (Python: 85%) and 52% for robot
+  demos only (Python: 45%).
+- **Speed.** One control step costs about 11 ms to render both cameras, about 18 ms for the two CNNs and 2 ms of
+  physics, against a 33 ms budget at 30 Hz. On an M4 laptop that is close to real time (0.8 to 0.9x measured
+  while other jobs shared the CPU). Slower machines run below real time and the page says so.
 - **Interaction.** Shift-drag (or "Push eggs" on a phone) attaches a critically damped spring to an egg through
   `xfrc_applied`, applied every physics step. Contact-force arrows, the pad sensor sites and the collision
   geometry can be shown. A timeline scrubs back through the run.
@@ -236,7 +300,9 @@ trained weights. Nothing is pre-recorded. `web/` holds the app; `python -m eggsi
   only servo current.
 - **Contact is approximate.** Eggs are rigid ellipsoids with a force threshold scaled to the SO-101's
   5 N gripper (a real shell takes roughly 10x more). Pad friction, compliance and jaw inertia are assumed.
-- **State, not pixels.** Policies see egg position directly, not camera images.
+- **Cameras are simple.** The camera policies see flat-shaded 64x64 ray-cast images with no texture, glare,
+  motion blur or calibration error. Human demos are rendered with the robot's gripper (perfect visual
+  retargeting). The headline results use egg position; the camera results use 3 seeds, not 5.
 
 ## Reproduce
 
@@ -248,6 +314,9 @@ python -m eggsim collect                  # demos -> data/ (about 6 min on 10 co
 python -m eggsim gain                     # 80 policies (about 2.5 h on 10 cores)
 python -m eggsim ablations                # 160 policies (about 3.5 h)
 python -m eggsim robustness               # 12,000 test eggs (about 20 min)
+python -m eggsim pixels render            # camera frames for every demo -> data/ (about 2.3 GB)
+python -m eggsim pixels mps &             # 48 camera policies on the GPU (MPS)
+python -m eggsim pixels gain 6            # evaluates each as it appears (both: about 3.7 h on an M4)
 python -m eggsim validate                 # physics checks
 python -m eggsim figures && python -m eggsim render
 python -m eggsim web-export               # browser assets + parity references -> web/
@@ -269,11 +338,13 @@ eggsim/
   validate.py     physics checks
   figures.py      every figure, one visual system
   render.py       video, gif, hero still
+  camera.py       ray-cast cameras (same maths as web/sim/camera.js)
+  pixels.py       camera frames, CNN policy, training and evaluation
   web_export.py   scene, policies and parity references for the browser
 web/
-  sim/            env.py and the policy runner, ported to JavaScript
+  sim/            env.py, the cameras and both policy runners, ported to JavaScript
   app/            three.js view, force chart, controls
-  test/           parity test against recorded Python episodes
+  test/           parity tests against recorded Python episodes (state and cameras)
 docs/physics.md   modelling notes
 ```
 

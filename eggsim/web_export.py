@@ -207,8 +207,102 @@ def export_reference(n_eps=6):
     (ROOT / "web/test/reference.json").write_text(json.dumps(eps))
 
 
+# ---------------------------------------------------------------- pixel policies
+PIXEL_POLICIES = ROOT / "data/policies_pixels"
+
+
+def export_camera():
+    from . import camera
+    m = build_spec(6, render=True).compile()
+    spec = dict(res=camera.RES, cameras=list(camera.CAMERAS), groups=camera.GROUPS.tolist(), light=camera.LIGHT.tolist(),
+                ambient=camera.AMBIENT, diffuse=camera.DIFFUSE, background=camera.BACKGROUND.tolist(),
+                cutoff=camera.CUTOFF, colours=camera.geom_colours(m).ravel().tolist())
+    (OUT / "camera.json").write_text(json.dumps(spec))
+
+
+def _pixel_seed(cond, n):
+    rows = [r for r in json.load(open(ROOT / "results/gain_pixels.json")) if r["cond"] == cond and r["n_robot"] == n]
+    med = float(np.median([r["success"] for r in rows]))
+    best = min(rows, key=lambda r: (abs(r["success"] - med), r["seed"]))
+    return best["seed"], best["success"], [r["success"] for r in sorted(rows, key=lambda r: r["seed"])]
+
+
+def export_pixel_policies():
+    import torch
+    from .pixels import KEYPOINTS
+    from .camera import RES
+    index = [p for p in json.loads((OUT / "policies/index.json").read_text()) if p.get("input") != "pixels"]
+    for cond in "ABCD":
+        for n in (10, 25, 50, 100):
+            seed, succ, all_succ = _pixel_seed(cond, n)
+            d = torch.load(PIXEL_POLICIES / f"{cond}_n{n}_s{seed}.pt", weights_only=False)
+            sd = d["model"]
+            keys = [f"enc.{e}.{k}" for e in (0, 1) for k in ("conv.0.weight", "conv.0.bias", "conv.2.weight",
+                                                               "conv.2.bias", "conv.4.weight", "conv.4.bias",
+                                                               "ssm.log_temp")]
+            keys += [f"{a}.{b}" for lin, ln in (("trunk.0", "trunk.1"), ("trunk.4", "trunk.5"), ("trunk.8", "trunk.9"))
+                     for a, b in ((lin, "weight"), (lin, "bias"), (ln, "weight"), (ln, "bias"))]
+            keys += ["act.weight", "act.bias"]
+            name = f"px_{cond}_n{n}"
+            np.concatenate([sd[k].numpy().ravel() for k in keys]).astype(np.float16).tofile(OUT / "policies" / f"{name}.bin")
+            cfg = d["cfg"]
+            index.append(dict(name=name, input="pixels", cond=cond, n_robot=n, seed=seed, success=succ,
+                              success_seeds=all_succ, touch=cfg["touch"], hist=cfg["hist"], chunk=cfg["chunk"],
+                              keypoints=KEYPOINTS, res=RES, shapes=[list(sd[k].shape) for k in keys],
+                              mp=d["mp"].tolist(), sp=d["sp"].tolist(), my=d["my"].tolist(), sy=d["sy"].tolist()))
+    (OUT / "policies/index.json").write_text(json.dumps(index))
+    print("pixel policies exported; index has", len(index))
+
+
+def export_pixel_reference(n_eps=4):
+    """Pixel-policy episodes with float16 weights: the frames rendered (base64 uint8, cameras x 64 x 64 x 3), the policy
+    inputs and the actions."""
+    import base64
+    import torch
+    from .camera import Cameras
+    from .env import EggEnv, flat_obs, setup_episode
+    from .pixels import Runner, load_policy, policy_episode, saliency
+    eps = []
+    for name in ("C_n25", "A_n25"):
+        meta = next(p for p in json.load(open(OUT / "policies/index.json")) if p["name"] == f"px_{name}")
+        pol = load_policy(PIXEL_POLICIES / f"{name}_s{meta['seed']}.pt")
+        with torch.no_grad():
+            for p in pol["model"].parameters():
+                p.copy_(p.half().float())
+        env = EggEnv(seed=778)
+        rng = np.random.default_rng(32)
+        runner = Runner(pol, Cameras(env.m))
+        for i in range(n_eps):
+            kind = ("raw", "stone")[i % 2]
+            k = setup_episode(env, rng, kind)
+            init = dict(qpos=env.d.qpos.tolist(), qvel=env.d.qvel.tolist(), ctrl=env.d.ctrl.tolist(),
+                        warmstart=env.d.qacc_warmstart.tolist(), egg_r=list(env.egg_r), kinds=[e.kind for e in env.eggs],
+                        target=k, drop=env.drop.tolist(), ee_target=env.ee_target.tolist())
+            obs_log, act_log, frames, qpos = [], [], [], []
+            act = runner.act
+
+            sal = {}
+
+            def logged(o, d):
+                obs_log.append(o.tolist()); qpos.append(d.qpos.tolist())
+                a = act(o, d)
+                t = len(frames)
+                if t < 40:                     # keep the file small: frames for the first 40 steps
+                    frames.append(base64.b64encode(np.asarray(runner.frames, np.uint8).tobytes()).decode())
+                if t in (0, 25):
+                    sal[t] = saliency(pol, runner.frames, runner.last_x).tolist()
+                return a
+            runner.act = logged
+            out, t = policy_episode(env, runner, record=lambda o, a, info: act_log.append(a.tolist()))
+            runner.act = act
+            eps.append(dict(policy=f"px_{name}", kind=kind, init=init, obs=obs_log, qpos=qpos[:40], frames=frames,
+                            actions=act_log, outcome=out, steps=t, saliency=sal))
+            print("pixels", name, kind, out, t, flush=True)
+    (ROOT / "web/test/reference_pixels.json").write_text(json.dumps(eps))
+
+
 def main(args=None):
-    args = args or ["variants", "scene", "policies", "reference"]
+    args = args or ["variants", "scene", "policies", "reference", "camera", "pixel-policies", "pixel-reference"]
     if "variants" in args:
         train_variants()
     if "scene" in args:
@@ -217,6 +311,12 @@ def main(args=None):
         export_policies()
     if "reference" in args:
         export_reference()
+    if "camera" in args:
+        export_camera()
+    if "pixel-policies" in args:
+        export_pixel_policies()
+    if "pixel-reference" in args:
+        export_pixel_reference()
 
 
 if __name__ == "__main__":

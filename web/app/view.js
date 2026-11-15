@@ -214,24 +214,3 @@ export class SceneView {
     this.spring.visible = true;
   }
 }
-
-// contact list for drawing: every active contact that touches an egg or its debris
-export function eggContacts(env, bodies) {
-  const mj = env.mj, m = env.m, d = env.d, out = [];
-  const con = d.contact;
-  for (let i = 0; i < d.ncon; i++) {
-    const c = con.get(i);
-    const b1 = m.geom_bodyid[c.geom1], b2 = m.geom_bodyid[c.geom2];
-    const on2 = bodies.has(b2), on1 = bodies.has(b1);
-    if (on1 || on2) {
-      mj.mj_contactForce(m, d, i, env.f6);
-      const f = env.f6.GetView(), fr = c.frame, sign = on2 ? 1 : -1;   // contact force acts on geom2
-      const w = [0, 1, 2].map((j) => sign * (f[0] * fr[j] + f[1] * fr[3 + j] + f[2] * fr[6 + j]));
-      const jaw = env.jawGeoms.has(on2 ? c.geom1 : c.geom2);
-      out.push({ p: Array.from(c.pos), f: w, jaw });
-    }
-    c.delete();
-  }
-  con.delete();
-  return out;
-}
